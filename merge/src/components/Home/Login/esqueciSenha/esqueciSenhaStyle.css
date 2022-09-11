@@ -1,0 +1,29 @@
+.btn-reedefinicao{
+    margin-top: 25px;
+    width: 406.93px;
+    height: 65px;
+    background: linear-gradient(0deg, rgba(0, 133, 255, 0.93), rgba(0, 133, 255, 0.93)), rgba(217, 217, 217, 0.29);
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+}
+
+.btn-reedefinicao:hover{
+    transform: scale(1.05);
+    background: #1366b4;
+}
+
+.span-btn-reedefinicao{
+    font-family: 'Baloo Bhai 2';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    margin-left: 5em;
+    letter-spacing: -0.08em;
+    line-height: 60px;
+}
+
+.div-forgot-email {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

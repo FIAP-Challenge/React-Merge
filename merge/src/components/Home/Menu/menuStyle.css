@@ -1,0 +1,34 @@
+
+.container{
+    background-color: #161618;
+    padding: 15px;
+    border: 1px solid #0a54e3;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    
+
+}
+
+img{
+    margin-top: 11px;
+    width: 120px;
+}
+
+.buttonLogin{
+    position: absolute;
+    right: 25px;
+    top: 19px;
+    padding: 10px;
+    background-color: #0681f3;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: all .2s ease-in-out;
+
+}
+
+.buttonLogin:hover{
+    transform: scale(1.05);
+    background-color: #1366b4;
+}

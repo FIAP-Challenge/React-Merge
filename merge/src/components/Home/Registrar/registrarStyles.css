@@ -1,0 +1,344 @@
+
+.stepper{
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+.containerRegistrarMaster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+   
+  
+}
+
+.Logo-div {
+    margin: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.containerRegistrar{
+    border: 1px solid #0a54e3;
+    background-color: #1b1f25;
+    display: flex;
+    padding: 30px;
+    flex-direction: column;
+    width: 90%;
+    max-width: 700px;
+
+}
+
+.formsInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.labelRegistrar{
+    font-family: 'Manjari', sans-serif;
+    margin: 10px;
+    color: rgba(255, 255, 255, 1);
+}
+
+
+.inputRegistrar {
+    cursor: url(http://www.rw-designer.com/cursor-extern.php?id=89785), text;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(0deg, rgba(217, 217, 217, 0.29), rgba(217, 217, 217, 0.29)), rgba(217, 217, 217, 0.29);
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.863);
+    font-size: 17px;
+    line-height: 39px;
+    letter-spacing: -0.05em;
+}
+
+.cepSearch{
+    color: #1366b4;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.cepSearch:hover{
+   color: rgb(0, 67, 250);
+}
+
+select:disabled,
+select:hover,
+select:focus,
+select:active,
+select:focus {
+  background-color: #7a7c7f;
+  transition:0s;
+}
+
+
+.inputRegistrar:disabled{
+    background-color: #202020f1;
+}
+
+.inputRegistrar::placeholder{
+    color: #c5c5c5;
+}
+
+.inputRegistrar[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+
+.buttonLoginContainer {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+
+.endereco_line1{
+    display: flex;
+}
+
+.divDisplayCEP{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buscarCEP {
+    background: none;
+    border: none;
+    color: rgba(0, 133, 255, 0.93);
+    display: contents;
+    font-size: 0.9rem;
+}
+
+.buscarCEP:hover{
+
+    color: #0062be;
+    cursor: pointer;
+
+}
+
+
+.logradouro{
+    width: 70%;
+    margin-right: 5%;
+}
+
+.numero-logradouro{
+    width: 30% ;
+}
+
+.complemento{
+    width: 60%;
+    margin-right: 5%;
+}
+
+.cidade{
+    width: 40%;
+}
+
+
+.estado{
+    width: 70%;
+    margin-right: 5%;
+}
+
+.uf{
+    width: 30%;
+}
+
+
+    
+.errosInputs {
+    color: #eb5353;
+    transition: all 150ms ease-in;
+}
+
+.containerButton{
+    display: flex;
+    justify-content: center;
+}
+
+
+.titulos-curriculo{
+    font-family: 'Manjari', sans-serif;
+    font-size: 1.2rem;
+    margin: 15px 0px;
+    color: rgba(255, 255, 255, 1);
+}
+
+
+.button-add {
+
+
+    margin: 10px;
+    background: #cdcccc30;
+    padding: 10px;
+    border: none;
+    color: rgb(0 133 255 / 93%);
+    border-radius: 22px;
+    -webkit-transition: background-color 2s ease-out;
+    -moz-transition: background-color 2s ease-out;
+    -o-transition: background-color 2s ease-out;
+    transition: background-color 2s ease-out;
+    transition: transform 150ms ease-in-out;
+    background: #cdcccc30;
+}
+
+
+
+hr.style-two {
+    margin: 27px 0px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #0a54e3b5, rgba(0, 0, 0, 0));
+}
+
+.button-add:hover{
+    background-color: #7a7a7a9f;
+    transform: scale(1.05);
+  
+
+}
+
+.displayButton {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-remove {
+    margin: 10px;
+    background: #cdcccc30;
+    width: 35px;
+    height: 35px;
+    border: none;
+    color: rgba(235, 60, 60, 0.93);
+    border-radius: 100%;
+    -webkit-transition: background-color 2s ease-out;
+    -moz-transition: background-color 2s ease-out;
+    -o-transition: background-color 2s ease-out;
+    transition: background-color 2s ease-out;
+    transition: transform 150ms ease-in-out;
+    
+    
+}
+
+.iconTrash{
+    font-size: 17px;
+}
+
+
+
+.button-remove:hover{
+    background-color: #7a7a7a9f;
+    transform: scale(1.05);
+}
+
+.containerInputs {
+    margin: 21px 0px;
+    border: 1px solid rgb(16 53 124);
+    padding: 10px;
+}
+
+
+
+.buttonNext{
+    margin-top: 25px;
+    padding: 15px 50px;
+    background: linear-gradient(0deg, rgba(0, 133, 255, 0.93), rgba(0, 133, 255, 0.93)), rgba(217, 217, 217, 0.29);
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Manjari', sans-serif;
+    font-size: 1rem;
+    transition: all 150ms ease-in;
+}
+
+.buttonNext:hover{
+    transform: scale(1.05);
+    background: #1366b4;
+}
+
+
+.info{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0px 10px;
+}
+
+
+.fade-in-image {
+    animation: fadeIn 2s;
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -o-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+
+
+  .fade-out-image {
+    animation: fadeOut 2s;
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -o-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+  }
+  
+
+    
+  @keyframes fadeOut {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }
+  
+  @-moz-keyframes fadeOut {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }
+  
+  @-webkit-keyframes fadeOut {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }
+  
+  @-o-keyframes fadeOut {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }
+  
+  @-ms-keyframes fadeOut {
+    100% { opacity: 0; }
+    0% { opacity: 1; }
+  }

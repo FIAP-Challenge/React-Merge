@@ -1,0 +1,176 @@
+.containerHome {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 673px;
+    justify-content: center;
+}
+
+.imgContentMerge{
+    width: 60%;
+}
+
+.mergeContent {
+    margin: 40px;
+    max-width: 600px;
+    font-family: 'Manjari', sans-serif;
+}
+
+.mergeContent > h1{
+    font-size: 3em;
+}
+
+.mergeContent > p{
+    margin-top: 20px;
+}
+
+.containerPartners{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+
+.fade-in-image {
+    animation: fadeIn 3s;
+    -webkit-animation: fadeIn 3s;
+    -moz-animation: fadeIn 3s;
+    -o-animation: fadeIn 3s;
+    -ms-animation: fadeIn 3s;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+.logoFIAP{
+    width: 162px;
+}
+
+.containerLogo {
+    display: flex;
+    align-items: center;
+}
+
+.container-box{
+    width: 100%;
+    padding-bottom: 70px;
+    background: linear-gradient(180deg, rgba(52, 50, 167, 0.85) 0%, rgba(48, 0, 149, 0) 102.48%);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.container-box > div{
+    margin-left: 10%;
+    width: auto;
+    padding-top: 25px;
+}
+
+.container-box > div > h1{
+    font-size: 26px;
+    color: white;
+
+}
+
+.sub-text-box{
+    font-size: 15px;
+    color: white;
+    width: 50%;
+}
+
+.coluna-hover{
+    margin-left: -20px;
+    display: inline-block;
+}
+
+
+.box-hover{
+    
+    background-size: 20px 100%;
+    filter: blur(0.3px);
+    background-repeat: no-repeat;
+    padding: 20px 24px 30px 44px;
+    transition: all 150ms ease-in;
+    width: 295px;
+    height: 120px;
+    border-radius: 5px;
+    color: white;
+    margin: 10px 0px 0px 10px;
+}
+
+
+
+
+.box-hover h6{
+    font-size: 16px;
+    margin: 0px;
+}
+
+.box-hover:hover{
+    box-shadow: 1px 2px 10px 0px #00000054;
+    transform: scale(1.05);
+    margin-top: 10px;
+    background-image: linear-gradient(#9393e573, #bbbbbbb4);
+    background-size: 20px 100%;
+    filter: blur(.3px);
+    background-repeat: no-repeat;
+    padding: 20px 24px 30px 44px;
+    transition: all 150ms ease-in;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.774);
+    color: black;
+}
+
+.box-hover:hover ~::after .container-box {
+   
+    background: linear-gradient(180deg, rgba(7, 4, 148, 0.85) 0%, rgba(81, 0, 255, 0) 102.48%);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+}
+
+.img-backgroud-hover{
+    padding-top: 6px;
+    width: 30%;
+    position: absolute;
+    right: 158px;
+    transition: all .2s ease-in-out;
+}
+
+@media screen and (max-width: 1250px){
+    .img-backgroud-hover{
+       display: none;
+    }
+ 
+}
+
+
+@media screen and (max-width: 800px){
+
+    .imgContentMerge {
+        display: none;
+        width: 450px;
+    }
+
+ 
+}

@@ -1,0 +1,165 @@
+.containerLoginMaster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.logoMerge {
+    width: 65px;
+    margin: 0;
+}
+
+.containerLogin {
+    border: 1px solid #0a54e3;
+    background-color: #1b1f25;
+    display: flex;
+    padding: 30px;
+    flex-direction: column;
+    width: 90%;
+    max-width: 550px;
+}
+
+.formsInputsLogin{
+    width: 100%;
+}
+
+
+
+.div-forgot-pass {
+    background-color: rgba(255, 173, 21, 0);
+    max-width: 400px;
+    height: 25px;
+    align-items: end;
+}
+
+.div-forgot-pass:hover {
+    transform: scale(1.1);
+}
+
+.span-forgot-pass {
+    font-family: "Manjari", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 39px;
+    letter-spacing: -0.05em;
+    color: #0a54e3;
+}
+
+.span-forgot-pass:hover {
+    color: #1366b4;
+}
+
+.link-btn-login {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.containerInputsLogin {
+    width: 100%;
+}
+
+.forgotContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.forgot-password{
+    text-decoration: none;
+    color: #0a54e3;
+    
+}
+
+
+.buttonLoginContainer {
+    margin: 20px;
+}
+
+.link-btn-login::after {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.btn-login {
+    cursor: pointer;
+    padding: 15px 80px;
+    background: linear-gradient(0deg, rgba(0, 133, 255, 0.93), rgba(0, 133, 255, 0.93)), rgba(217, 217, 217, 0.29);
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Manjari' sans-serif;
+    font-size: 0.8rem;
+}
+
+.btn-login:hover {
+    transform: scale(1.05);
+    background: #1366b4;
+}
+
+.span-btn-login {
+    font-family: "Manjari", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+
+.containerRegistrarPass {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registrar-se{
+    text-decoration: none;
+    margin-left: 5px;
+    color: #0a54e3;
+}
+
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    background-color: #e03d3df5;;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.closeModal{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+}
+
+.containerHeaderModal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerCloseModal{
+    /* width: 100%; */
+}
+
+
+.containerModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.containerErro {
+    /* background: #ff000091; */
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    font-family: 'Manjari', sans-serif;
+    margin: 10px;
+    background: rgb(255 0 0 / 50%);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgb(255 0 0);
+}

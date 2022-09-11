@@ -1,0 +1,59 @@
+.notFoundContainer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    font-family: 'Manjari', sans-serif;
+    animation: circle-in-hesitate 2s;
+    -webkit-animation: circle-in-hesitate 1s;
+    -moz-animation: circle-in-hesitate 1s;
+    -o-animation: circle-in-hesitate 1s;
+    -ms-animation: circle-in-hesitate 1s;
+    background-color: #3f3f3f;
+    
+}
+
+img.mergeLogo {
+    width: 100%;
+}
+
+img.img404 {
+    width: 181%;
+    max-width: fit-content;
+}
+
+.backToHome {
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    background: #1a83ff;
+    color: #ffff;
+    border-radius: 10px;
+    transition: all 235ms;
+}
+
+.backToHome:hover{
+
+    transform: scale(1.02);
+    background: #0077ff;
+    
+}
+
+@keyframes circle-in-hesitate {
+    0% {
+      clip-path: circle(0%);
+    }
+    40% {
+      clip-path: circle(40%);
+    }
+    100% {
+      clip-path: circle(125%);
+    }
+  }
+  
+  [transition-style="in:circle:hesitate"] {
+    animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
+  }
+
