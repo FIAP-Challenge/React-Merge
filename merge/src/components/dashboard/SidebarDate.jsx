@@ -6,8 +6,8 @@ import * as IoIcons from "react-icons/io"
 
 export const SidebarDate = [
     {
-        title: 'Noticias',
-        path: "/dashboard/noticias",
+        title: 'DISC',
+        path: "/dashboard/disc",
         icon: <FaIcons.FaEnvelopeOpenText/>,
         cName: 'nav-text'
     },

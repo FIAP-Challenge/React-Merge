@@ -1,11 +1,22 @@
-import React from "react"
+import React, {useState} from "react"
+import './VagasStyles.css'
 
 const Vagas = () => {
 
-    return(
-        <div className="vagas">
+    const [vagas, setVagas] = useState();
+ 
 
-            <h1>Vagas</h1>
+    return (
+        <div className="containerVagasMaster">
+
+            <div className="containerVagas">
+
+
+
+            
+
+            </div>
+
 
         </div>
     )

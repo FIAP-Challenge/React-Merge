@@ -1,0 +1,102 @@
+.containerDiscMaster {
+    margin-top: 40px;
+    font-family: "Manjari", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.containerDisc {
+    border: 1px solid #0a54e3;
+    background-color: #1b1f25;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    width: 90%;
+    max-width: 700px;
+}
+
+.discHeader {
+    /* From https://css.glass */
+    background: #0a54e3b0;
+    /* border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); */
+    border: 1px solid #0a54e3;
+    padding: 10px;
+}
+
+.discRespostas {
+    
+    padding: 10px;
+    margin: 13px 0px;
+    /* background: rgba(0, 134, 255, 0.49); */
+    border-radius: 5px;
+    /* box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); */
+    border: 1px solid #0a54e3;
+    display: flex;
+    align-items: center;
+}
+
+.selectFieldDisc {
+    color: white;
+    width: 52px;
+    background: #ffffff69;
+    /* background-image: linear-gradient(45deg, #b4b4b4bf, #0a54e300); */
+    height: 40px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.flexAlign-disc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MobileStepper {
+    
+    color: white !important;
+    margin-top: 20px;
+    background-color: #383838 !important;
+    width: 50%;
+    min-width: 300px;
+    border-radius: 50px;
+    padding: 0 !important;
+    height: 40px;
+}
+
+.buttonAvançar {
+    border-radius: 5px 22px 22px 5px !important;
+    background: #0a54e3 !important;
+    height: 100%;
+    width: 100px;   
+    color: white !important;
+}
+
+.buttonVoltar{
+    border-radius: 22px 5px 5px 22px !important;
+    width: 100px;
+    background: #868686 !important;
+    height: 100%;
+    color: white !important;
+}
+
+
+.buttonVoltar:hover{
+    background: #494949 !important;
+    cursor: pointer !important;
+   
+}
+
+.buttonAvançar:hover {
+    background: #024fa8 !important;
+    
+}
+

@@ -7,7 +7,7 @@ const Curriculo = () => {
     return(
         <div className="containerPage">
 
-            <h1>Curriculo</h1>
+            {/* <h1>Curriculo</h1> */}
 
         </div>
     )

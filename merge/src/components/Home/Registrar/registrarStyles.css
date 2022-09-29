@@ -173,6 +173,13 @@ select:focus {
     color: rgba(255, 255, 255, 1);
 }
 
+.p-curriculos{
+    font-family: 'Manjari', sans-serif;
+    font-size: 0.9rem;
+    margin: 15px 0px;
+    color: rgba(255, 255, 255, 1);
+}
+
 
 .button-add {
 

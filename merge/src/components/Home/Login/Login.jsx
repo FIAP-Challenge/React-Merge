@@ -57,7 +57,7 @@ const Login = () => {
 
                                 if (values.email === 'teste@fiap.com.br' && values.senha === "12345678") {
 
-                                    navigate('/dashboard/noticias');
+                                    navigate('/dashboard/vagas');
 
                                 }
                                 else {

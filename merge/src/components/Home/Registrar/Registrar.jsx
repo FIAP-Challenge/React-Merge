@@ -4,12 +4,15 @@ import './registrarStyles.css'
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as yup from "yup";
+import { useNavigate, Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import api from '../../../Services/api/api';
 import { BiTrash, } from 'react-icons/bi'
 import ButtonInfos from '../../Templates/buttonInfos/ButtonInfos';
+import Disc from '../../dashboard/pages/disc/Disc';
 
 const Registrar = () => {
+    const navigate = useNavigate();
     const [dadosform1, setdadosform1] = useState({});
     const [dadosform2, setdadosform2] = useState({});
     const [cep, setCep] = useState();
@@ -36,7 +39,7 @@ const Registrar = () => {
 
 
 
-   
+
 
     const validationSchema = yup.object({
         email: yup
@@ -184,7 +187,6 @@ const Registrar = () => {
                         connectorStateColors={true}>
                         <Step onClick={() => setGoSteps(0)} label="Dados do candidato" />
                         <Step onClick={() => setGoSteps(1)} label="Curriculo" />
-                        {/* <Step onClick={() => setGoSteps(2)} label="Informações adicionais" /> */}
                     </Stepper>
                 </div>
                 {goSteps === 0 && (
@@ -339,15 +341,7 @@ const Registrar = () => {
 
                                                             console.log(typeof (infosLogradouros))
                                                             console.log(infosLogradouros)
-
-
-
-
-
-
                                                         }
-
-
                                                         }
                                                         className='buscarCEP'>Buscar CEP</button>
 
@@ -408,7 +402,7 @@ const Registrar = () => {
 
 
                                             <div className='containerButton'>
-                                                <button className='buttonNext' type="submit">Continuar</button>
+                                                <button className='buttonNext' type="submit">Avançar</button>
 
                                             </div>
 
@@ -471,10 +465,10 @@ const Registrar = () => {
                                     await new Promise((r) => setTimeout(r, 500));
 
                                     if (values) {
-                                        setGoSteps(2)
                                         setdadosform2(values)
-                                        console.log(dadosform2)
+                                        navigate('/dashboard/disc');
 
+                        
 
                                     }
                                     // alert(JSON.stringify(values, null, 2));
@@ -770,8 +764,7 @@ const Registrar = () => {
 
 
                                             <div className='containerButton'>
-                                                <button className='buttonNext' type="submit">Registrar</button>
-
+                                                <button className='buttonNext' type="submit">Registrar-se</button>
                                             </div>
                                         </Form>
                                     </div>
@@ -781,12 +774,7 @@ const Registrar = () => {
 
                     </div>
                 )}
-                {/* {goSteps === 2 && (
-                    <div>
-                        Payment
-                        <button onClick={() => setGoSteps(3)}>Enviar</button>
-                    </div>
-                )} */}
+               
             </div>
 
         </>

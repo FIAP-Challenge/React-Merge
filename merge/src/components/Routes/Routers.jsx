@@ -8,12 +8,12 @@ import Dashboard from '../dashboard/Dashboard'
 import Footer from '../Home/Footer/Footer'
 import Menu from '../Home/Menu/Menu'
 import Vagas from '../dashboard/pages/vagas/Vagas'
-import Noticias from '../dashboard/pages/noticias/Noticias'
 import Curriculo from '../dashboard/pages/curriculos/Curriculo'
 import Entrevistas from '../dashboard/pages/entrevistas/Entrevistas'
 import Informacoes from '../dashboard/pages/informacoes/Informacoes'
 import Suporte from '../dashboard/pages/suporte/Suporte'
 import PaginaNaoLocalizada from '../paginaNaoLocalizado/PaginaNaoLocalizada'
+import Disc from '../dashboard/pages/disc/Disc'
 
 
 const ProtectedRoute = ({ user, children }) => {
@@ -35,7 +35,7 @@ const Routers = () => {
         <Route path='/login' element={<ProtectedRoute user={true}> <Menu/> <Login /> <Footer/> </ProtectedRoute>} />
         <Route path='/registrar' element={<ProtectedRoute user={true}> <Menu/><Registrar /> <Footer/></ProtectedRoute>} />
         <Route path='/esqueciSenha' element={<ProtectedRoute user={true}> <Menu/><EsqueciSenha /> <Footer/></ProtectedRoute>} />
-        <Route path="/dashboard/noticias" element={<ProtectedRoute user={isAuth()}> <Dashboard /> <Noticias/></ProtectedRoute>} />
+        <Route path="/dashboard/disc" element={<ProtectedRoute user={isAuth()}> <Dashboard/> <Disc/></ProtectedRoute>} />
         <Route path="/dashboard/curriculo" element={<ProtectedRoute user={isAuth()}><Dashboard/><Curriculo /></ProtectedRoute>} />
         <Route path="/dashboard/vagas" element={<ProtectedRoute user={isAuth()}><Dashboard/><Vagas /></ProtectedRoute>} />
         <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={isAuth()}><Dashboard/><Entrevistas /></ProtectedRoute>} />
