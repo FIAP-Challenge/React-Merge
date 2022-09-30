@@ -7,7 +7,7 @@ import './ButtonInfosStyles.css'
 const ButtonInfos = (props) => {
 
     return (
-        <div>
+        <div className="buttonInfo">
 
             <Tippy 
                 render={attrs => (

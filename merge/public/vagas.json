@@ -1,0 +1,106 @@
+   {
+        "vagas": [
+            {
+                "vaga": {
+                    "idVaga": 1,
+                    "nomeVaga": "Banco de dados",
+                    "nomeCargo": "Estágio",
+                    "descricao": "Vaga é para estagiar em Banco de dados, Vai criar relacionamento em tabelas e ajudar no dia a dia com modelagem de dados",
+                    "requisitos": "SQL Developer, Javascript, Banco relacional, Inglês: basico",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 2000,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Flex",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 12
+                }
+            },
+            {
+                "vaga": {
+                    "idVaga": 2,
+                    "nomeVaga": "Front-End",
+                    "nomeCargo": "Estágio",
+                    "descricao": "Vaga para Front-End, funcionalidade de HTML e ajudar diariamente com o visual da página",
+                    "requisitos": "Javascript, HTML, CSS, Inglês: basico",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 2000,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Flex",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 98
+                }
+            },
+            {
+                "vaga": {
+                    "idVaga": 3,
+                    "nomeCargo": "Estágio",
+                    "nomeVaga": "Back-End",
+                    "descricao": "Vaga para Back-End",
+                    "requisitos": "Java, Python, RESTFull, Inglês: basico",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 2000,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Flex",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 67
+                }
+            },
+            {
+                "vaga": {
+                    "idVaga": 4,
+                    "nomeVaga": "Analista de TI",
+                    "nomeCargo": "Estágio",
+                    "descricao": "Vaga analista de TI",
+                    "requisitos": "Hardware, Inglês: basico",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 2000,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Flex",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 100
+                }
+            },
+            {
+                "vaga": {
+                    "idVaga": 5,
+                    "nomeVaga": "Assistente administrativo",
+                    "nomeCargo": "Estágio",
+                    "descricao": "Vaga para estágio em administração da área",
+                    "requisitos": "Excel,PowerPoint, Inglês: basico",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 1865,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Presencial",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 5
+                }
+            },
+            {
+                "vaga": {
+                    "idVaga": 6,
+                    "nomeVaga": "CyberSecurity",
+                    "nomeCargo": "Estágio",
+                    "descricao": "Vaga para estágio em CyberSecurity",
+                    "requisitos": "Ferramentas de CyberSecurity",
+                    "beneficios": "VR, VA, VT",
+                    "status": "Vaga Aberta",
+                    "remuneracao": 2000,
+                    "cargaHoraria": "40H/Semanal",
+                    "modalidadeTrabalho": "Home Office",
+                    "dataDisponibilizacaoVaga": "28/09/2022",
+                    "dataFimDispobilizacaoVaga": "25/12/2022",
+                    "score": 5
+                }
+            }
+        ]
+    }

@@ -90,7 +90,7 @@ const Disc = () => {
                                                             <div>
                                                                 <Field name="`perguntas.${index}.respostaA`" className="selectFieldDisc" as="select" id="respostaA">
                                                                     <option value="" defaultValue></option>
-                                                                    <option value="1">1</option>
+                                                                    <option name={`perguntas.${index}.respostaA`} value="1">1</option>
                                                                     <option value="2">2</option>
                                                                     <option value="3">3</option>
                                                                     <option value="4">4</option>
