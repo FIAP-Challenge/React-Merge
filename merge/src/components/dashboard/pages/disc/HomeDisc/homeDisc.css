@@ -1,0 +1,35 @@
+.containerHomeDiscMaster {
+   margin-top: 40px;
+    font-family: "Manjari", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.containerHomeDisc {
+    border: 1px solid #0a54e3;
+    background-color: #1b1f25;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    width: 90%;
+    max-width: 700px;
+}
+
+.informativo{
+    margin: 15px 0px;
+}
+
+
+ul.informativo {
+    margin-left: 17px;
+}
+
+img.imgDisc {
+    width: 100%;
+    
+}
+
+

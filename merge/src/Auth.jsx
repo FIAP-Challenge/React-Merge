@@ -1,2 +1,4 @@
-export const isAuth = () =>  true
+import React from "react"
+
+export  const isAuth = () =>  true
 

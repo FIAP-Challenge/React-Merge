@@ -247,7 +247,6 @@ const Registrar = () => {
                                                 <ErrorMessage className='errosInputs' component="div" name="celular" />
                                             </div>
 
-
                                             <div className='formsInputs'>
                                                 <label className='labelRegistrar' htmlFor="numCPF">Numero CPF *</label>
                                                 <Field id="numCPF" className="inputRegistrar" type="number" name="numCPF" placeholder="Numero CPF"

@@ -1,4 +1,3 @@
-
 export const DiscData = [
     {
        pergunta: "1. Em um restaurante. Estou esperando uma mesa e o garçom me diz que em 10 minutos terei uma mesa, porém passam 20 minutos",

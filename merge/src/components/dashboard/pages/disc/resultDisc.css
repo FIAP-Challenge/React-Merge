@@ -1,0 +1,12 @@
+.scale {
+    fill: #2626266e;
+    stroke: #999;
+    stroke-width: .2;
+}
+
+.caption {
+    font-size: 12px;
+    fill: rgb(228, 228, 228);
+    font-weight: 400;
+    text-shadow: none;
+}

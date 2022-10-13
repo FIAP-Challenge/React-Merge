@@ -23,19 +23,18 @@ export const SidebarDate = [
         icon: <FaIcons.FaCartPlus/>,
         cName: 'nav-text'
     },
-    {
-        title: 'Entrevistas',
-        path: "/dashboard/entrevistas",
-        icon: <IoIcons.IoMdPeople/>,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Informações',
-        path: "/dashboard/informacoes",
-        icon: <AiIcons.AiFillHome/>,
-        cName: 'nav-text'
-    },
-    
+    // {
+    //     title: 'Entrevistas',
+    //     path: "/dashboard/entrevistas",
+    //     icon: <IoIcons.IoMdPeople/>,
+    //     cName: 'nav-text'
+    // },
+    // {
+    //     title: 'Informações',
+    //     path: "/dashboard/informacoes",
+    //     icon: <AiIcons.AiFillHome/>,
+    //     cName: 'nav-text'
+    // },
     {
         title: 'Suporte',
         path: "/dashboard/suporte",
