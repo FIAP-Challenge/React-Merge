@@ -28,6 +28,14 @@ const ProtectedRoute = ({ user, children }) => {
 
 const Routers = () => {
   const { auth } = useContext(AuthContext)
+
+
+  function termometro(requisitos, curriculo, boolean){
+    
+    
+
+  }
+
   return (
 
     <>

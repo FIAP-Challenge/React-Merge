@@ -17,7 +17,7 @@ import { AuthContext } from "../../../AuthContext";
 
 
 
-
+set
 const VagasModal = (props) => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const { candidato, setCandidato } = useContext(AuthContext)
