@@ -6,7 +6,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import ErroLogin from "../../Dialogs/erroLogin/ErroLogin";
 import * as AiIcons from "react-icons/ai"
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../../AuthContext";
+import axios from 'axios';
+import Menu from './../Menu/Menu'
+import Footer from './../Footer/Footer'
 
 
 
@@ -16,17 +20,19 @@ const validationSchema = yup.object({
     email: yup
         .string()
         .required("O e-mail é obrigatório"),
-    senha: yup
+    senhaLogin: yup
         .string()
         .required("A senha é obrigatoria")
 
 });
 
 const Login = () => {
+    const { setAuth, auth, candidato, setCandidato } = useContext(AuthContext)
+
+
     const navigate = useNavigate();
     const [mostraErro, setMostraErro] = useState(false);
     const [erro, setErro] = useState(
-
         <div className="containerErro">
             <div>
                 <h2>Falha no login</h2>
@@ -41,35 +47,58 @@ const Login = () => {
         </div>)
 
 
+    async function handleLogin(objeto) {
+        try {
+            let res = await axios({
+                method: 'post',
+                url: 'http://localhost:8080/Merge/rest/candidato',
+                data: objeto
+            });
+            let data = res.data;
+            alert("Sucesso!")
+            setCandidato({})
+            setCandidato(res.data)
+            setAuth(true)
+            navigate("/dashboard/vagas")
+
+            return data;
+        } catch (error) {
+            setMostraErro(true)
+            // alert("Falha na auth")
+            console.log(error.response); // this is the main part. Use the response property from the error object
+            return error.response;
+        }
+
+    }
+
 
     return (
-        <>
+        <>  
+            <Menu/>
             <div className="containerLoginMaster fade-in-image">
                 <div className="containerLogin">
                     <div className="Logo-div">
                         <Link to="/"><img className="logoMerge" src={logoMerge} alt="Logotipo Merge" /></Link>
                     </div>
                     <Formik
-                        initialValues={{ email: "", senha: "" }}
+                        initialValues={{ email: "", senhaLogin: "" }}
                         onSubmit={async (values) => {
                             await new Promise((r) => setTimeout(r, 500));
-                            if (values) {
-
-                                if (values.email === 'teste@fiap.com.br' && values.senha === "12345678") {
-
-                                    navigate('/dashboard/vagas');
-
-                                }
-                                else {
-                                    setMostraErro(true)
+                            handleLogin(values)
 
 
+                            // if (values) {
+                            //     if (values.email === 'teste@fiap.com.br' && values.senha === "12345678") {
+                            //         navigate('/dashboard/vagas');
+                            //     }
+                            //     else {
+                            //         setMostraErro(true)
 
-                                }
+                            //     }
 
 
-                                // navigate("/dashboard/noticias")
-                            }
+                            //     // navigate("/dashboard/noticias")
+                            // }
 
                             // alert(JSON.stringify(values, null, 2));
                         }}
@@ -92,9 +121,9 @@ const Login = () => {
                                         <ErrorMessage className='errosInputs' component="div" name="email" />
                                     </div>
                                     <div className='formsInputsLogin'>
-                                        <label className='labelRegistrar' htmlFor="senha">Senha *</label>
-                                        <Field id="senha" className="inputRegistrar" type="password" name="senha" placeholder="Senha" />
-                                        <ErrorMessage className='errosInputs' component="div" name="senha" />
+                                        <label className='labelRegistrar' htmlFor="senhaLogin">Senha *</label>
+                                        <Field id="senhaLogin" className="inputRegistrar" type="password" name="senhaLogin" placeholder="Senha" />
+                                        <ErrorMessage className='errosInputs' component="div" name="senhaLogin" />
                                     </div>
                                     <div className="forgotContainer">
 
@@ -137,7 +166,8 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
+            
+            <Footer/>
         </>
     )
 

@@ -33,7 +33,7 @@ const Home = () => {
 
     return (
         <>
-
+            <Menu></Menu>
             <div className="containerHome fade-in-image">
 
                 <div className="mergeContent">
@@ -100,19 +100,12 @@ const Home = () => {
                             </div>
 
                         </div>
-
-
-
-
-
                     </div>
                 </div>
 
 
-            </div>
-
-           
-
+            </div>           
+            <Footer/>
         </>
     )
 }

@@ -3,7 +3,6 @@ import Home from '../Home/Home'
 import Login from '../Home/Login/Login'
 import Registrar from '../Home/Registrar/Registrar'
 import EsqueciSenha from '../Home/Login/esqueciSenha/EsqueciSenha'
-import { isAuth } from '../../Auth'
 import Dashboard from '../dashboard/Dashboard'
 import Footer from '../Home/Footer/Footer'
 import Menu from '../Home/Menu/Menu'
@@ -15,7 +14,8 @@ import Suporte from '../dashboard/pages/suporte/Suporte'
 import PaginaNaoLocalizada from '../paginaNaoLocalizado/PaginaNaoLocalizada'
 import Disc from '../dashboard/pages/disc/Disc'
 import HomeDisc from '../dashboard/pages/disc/HomeDisc/HomeDisc'
-
+import React, { useContext } from "react"
+import { AuthContext } from '../../AuthContext'
 
 const ProtectedRoute = ({ user, children }) => {
 
@@ -27,24 +27,24 @@ const ProtectedRoute = ({ user, children }) => {
 };
 
 const Routers = () => {
-
+  const { auth } = useContext(AuthContext)
   return (
 
     <>
       <Routes>
-        <Route path='/' element={<ProtectedRoute user={true}><Menu/> <Home /> <Footer/> </ProtectedRoute>} />
-        <Route path='/login' element={<ProtectedRoute user={true}> <Menu/> <Login /> <Footer/> </ProtectedRoute>} />
-        <Route path='/registrar' element={<ProtectedRoute user={true}> <Menu/><Registrar /> <Footer/></ProtectedRoute>} />
-        <Route path='/esqueciSenha' element={<ProtectedRoute user={true}> <Menu/><EsqueciSenha /> <Footer/></ProtectedRoute>} />
-        <Route path="/dashboard/disc" element={<ProtectedRoute user={isAuth()}> <Dashboard/> <HomeDisc/></ProtectedRoute>} />
-        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={isAuth()}> <Dashboard/> <Disc/></ProtectedRoute>} />
-        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={isAuth()}><Dashboard/><Curriculo /></ProtectedRoute>} />
-        <Route path="/dashboard/vagas" element={<ProtectedRoute user={isAuth()}><Dashboard/><Vagas /></ProtectedRoute>} />
-        <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={isAuth()}><Dashboard/><Entrevistas /></ProtectedRoute>} />
-        <Route path="/dashboard/informacoes" element={<ProtectedRoute user={isAuth()}><Dashboard/><Informacoes /></ProtectedRoute>} />
-        <Route path="/dashboard/suporte" element={<ProtectedRoute user={isAuth()}><Dashboard/><Suporte/></ProtectedRoute>} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/registrar' element={<Registrar />} />
+        <Route path='/esqueciSenha' element={<EsqueciSenha />} />
+        <Route path="/dashboard/disc" element={<ProtectedRoute user={auth}> <Dashboard/> <HomeDisc/></ProtectedRoute>} />
+        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard/> <Disc/></ProtectedRoute>} />
+        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard/><Curriculo /></ProtectedRoute>} />
+        <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard/><Vagas /></ProtectedRoute>} />
+        <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={auth}><Dashboard/><Entrevistas /></ProtectedRoute>} />
+        <Route path="/dashboard/informacoes" element={<ProtectedRoute user={auth}><Dashboard/><Informacoes /></ProtectedRoute>} />
+        <Route path="/dashboard/suporte" element={<ProtectedRoute user={auth}><Dashboard/><Suporte/></ProtectedRoute>} />
         <Route path="/*" element={<PaginaNaoLocalizada/>} />
-    
+       
       </Routes>
     </>
 

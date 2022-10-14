@@ -349,3 +349,26 @@ hr.style-two {
     100% { opacity: 0; }
     0% { opacity: 1; }
   }
+
+  @media screen and (max-width: 600px) {
+    ::-webkit-scrollbar {
+       display: none;
+      }
+      .margin-number{
+        margin-top: 12px;
+        font-size: 14px;
+      }
+
+      .buttonNext {
+        width: 100%;
+        margin-top: 25px;
+        padding: 15px 50px;
+        background: linear-gradient(0deg, rgba(0, 133, 255, 0.93), rgba(0, 133, 255, 0.93)), rgba(217, 217, 217, 0.29);
+        border: 1px solid #ffffff;
+        border-radius: 10px;
+        color: #fff;
+        font-family: 'Manjari', sans-serif;
+        font-size: 1rem;
+        transition: all 150ms ease-in;
+    }
+  }

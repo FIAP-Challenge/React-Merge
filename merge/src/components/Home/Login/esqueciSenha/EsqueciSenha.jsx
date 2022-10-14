@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../../Footer/Footer";
+import Menu from "../../Menu/Menu";
 import logoMerge from "./../../../../Assets/icon merge.svg"
 import "./esqueciSenhaStyle.css"
 
@@ -8,6 +10,7 @@ const EsqueciSenha = () => {
 
     return (
         <>
+            <Menu/>
             <div className="containerLoginMaster">
 
                 <div className="containerLogin">
@@ -31,6 +34,7 @@ const EsqueciSenha = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     )
 }

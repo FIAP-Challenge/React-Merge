@@ -1,23 +1,25 @@
 {
   "files": {
-    "main.css": "/React-Merge/static/css/main.4fb8b55c.css",
-    "main.js": "/React-Merge/static/js/main.3f17d605.js",
-    "static/media/Good team-pana 1.svg": "/React-Merge/static/media/Good team-pana 1.89ad8705dddc77a19b09161b4d819b69.svg",
-    "static/media/Audit-amico.svg": "/React-Merge/static/media/Audit-amico.5590d218168b60a0f0783d633e2a1d25.svg",
-    "static/media/Binary code-amico.svg": "/React-Merge/static/media/Binary code-amico.6e71e84b5d02b0d0363e4267f74358a4.svg",
-    "static/media/Hand coding-amico.svg": "/React-Merge/static/media/Hand coding-amico.9d2d6efb06d7652fb18f191d4157c617.svg",
-    "static/media/Online report-bro.svg": "/React-Merge/static/media/Online report-bro.03688c77a47876aaf824bb6960e08d2d.svg",
-    "static/media/404 Error-rafiki.svg": "/React-Merge/static/media/404 Error-rafiki.29291fe54adb80bde87586621f1706db.svg",
-    "static/media/fiap 1.svg": "/React-Merge/static/media/fiap 1.fe526dfd6e66bd090e0fa2cd4f0f780a.svg",
-    "static/media/IBM-Logo 1.svg": "/React-Merge/static/media/IBM-Logo 1.f0903a018dc2cee316b21c79d5f31ca6.svg",
-    "static/media/icon merge.svg": "/React-Merge/static/media/icon merge.9e1101576f528308cc66ca0cd09a5cdb.svg",
-    "static/media/Merge.svg": "/React-Merge/static/media/Merge.da98bc93e104d1ed755cb0b5f70dd8d6.svg",
-    "index.html": "/React-Merge/index.html",
-    "main.4fb8b55c.css.map": "/React-Merge/static/css/main.4fb8b55c.css.map",
-    "main.3f17d605.js.map": "/React-Merge/static/js/main.3f17d605.js.map"
+    "main.css": "/static/css/main.311faa84.css",
+    "main.js": "/static/js/main.30662fea.js",
+    "static/media/printExemploErrado.png": "/static/media/printExemploErrado.eb2caf8a030261b453a1.png",
+    "static/media/printExemploCerto.png": "/static/media/printExemploCerto.b1e7fb4788e1ac769036.png",
+    "static/media/Good team-pana 1.svg": "/static/media/Good team-pana 1.7eae1095c8e8ffc99aa6444e00f524a8.svg",
+    "static/media/Audit-amico.svg": "/static/media/Audit-amico.5590d218168b60a0f0783d633e2a1d25.svg",
+    "static/media/Binary code-amico.svg": "/static/media/Binary code-amico.6e71e84b5d02b0d0363e4267f74358a4.svg",
+    "static/media/Hand coding-amico.svg": "/static/media/Hand coding-amico.9d2d6efb06d7652fb18f191d4157c617.svg",
+    "static/media/Online report-bro.svg": "/static/media/Online report-bro.03688c77a47876aaf824bb6960e08d2d.svg",
+    "static/media/404 Error-rafiki.svg": "/static/media/404 Error-rafiki.29291fe54adb80bde87586621f1706db.svg",
+    "static/media/fiap 1.svg": "/static/media/fiap 1.fc7a7417f42da7e111e45b491f457d61.svg",
+    "static/media/IBM-Logo 1.svg": "/static/media/IBM-Logo 1.57091e1aab10b313aab108ec3127cea9.svg",
+    "static/media/icon merge.svg": "/static/media/icon merge.9e1101576f528308cc66ca0cd09a5cdb.svg",
+    "static/media/Merge.svg": "/static/media/Merge.ef691579e7d6688b6ff27337e80b7f09.svg",
+    "index.html": "/index.html",
+    "main.311faa84.css.map": "/static/css/main.311faa84.css.map",
+    "main.30662fea.js.map": "/static/js/main.30662fea.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fb8b55c.css",
-    "static/js/main.3f17d605.js"
+    "static/css/main.311faa84.css",
+    "static/js/main.30662fea.js"
   ]
 }

@@ -12,14 +12,15 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReactStoreIndicator from 'react-score-indicator'
 import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos'
-
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthContext";
 
 
 
 
 const VagasModal = (props) => {
     const [modalIsOpen, setIsOpen] = useState(false)
-
+    const { candidato, setCandidato } = useContext(AuthContext)
     const openModal = () => {
         var div = document.querySelector('html');
         div.style.overflow = 'hidden'
@@ -33,6 +34,7 @@ const VagasModal = (props) => {
 
     }
 
+    console.log(candidato)
     const separador = (string) => {
         let array = string.split(",")
         return array
@@ -55,7 +57,7 @@ const VagasModal = (props) => {
                 <div className='containerHeaderModal'>
                     <div className='align-Header separatorHeader'>
                         <div>
-                            <h1 className='titleVaga'>{props.vaga.status}</h1>
+                            {/* <h1 className='titleVaga'>{props.vaga.status}</h1> */}
                         </div>
                         <div className='containerCloseModal'>
                             <button className='closeModal' onClick={closeModal}><AiIcons.AiOutlineClose /></button>
@@ -64,7 +66,7 @@ const VagasModal = (props) => {
                     </div>
 
                     <div className='separatorHeader'>
-                        <h2 className='subTitle'>{props.vaga.nomeVaga} - {props.vaga.nomeCargo}</h2>
+                        <h2 className='subTitle'>{props.vaga.nome} - {props.vaga.cargo}</h2>
                     </div>
 
                 </div>
@@ -86,7 +88,7 @@ const VagasModal = (props) => {
                                     <p>Remuneração</p>
                                 </div>
                                 <div className='separatorGeneric'>
-                                    <p className='info-p'><b>R$ {props.vaga.remuneracao.toFixed(2)}</b></p>
+                                    <p className='info-p'><b>R$ {props.vaga.remuneracao}</b></p>
                                 </div>
                             </div>
 
@@ -99,7 +101,7 @@ const VagasModal = (props) => {
                                     <p>Carga horarária</p>
                                 </div>
                                 <div className='separatorGeneric'>
-                                    <p className='info-p' ><b>{props.vaga.cargaHoraria}</b></p>
+                                    <p className='info-p' ><b>{props.vaga.cargaHoraria}Hrs Dia</b></p>
                                 </div>
                             </div>
                             <div className='info-content'>
@@ -110,7 +112,7 @@ const VagasModal = (props) => {
                                     <p>Modalidade</p>
                                 </div>
                                 <div className='separatorGeneric'>
-                                    <p className='info-p'><b>{props.vaga.modalidadeTrabalho}</b></p>
+                                    <p className='info-p'><b>{props.vaga.modoTrabalho}</b></p>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +123,7 @@ const VagasModal = (props) => {
                             <h3>Descrição:</h3>
                         </div>
                         <div>
-                            <p>{props.vaga.descricao}</p>
+                            <p>{props.vaga.descricaoVaga}</p>
                         </div>
 
                     </div>
@@ -137,8 +139,8 @@ const VagasModal = (props) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
-                                    {separador(props.vaga.requisitos).map((obj) => (
-                                        <p>- {obj}</p>
+                                    {props.vaga.requisitos.map((obj) => (
+                                        <p>- {obj.nome}</p>
                                     ))}
                                 </Typography>
                             </AccordionDetails>
@@ -153,8 +155,8 @@ const VagasModal = (props) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
-                                    {separador(props.vaga.beneficios).map((obj) => (
-                                        <p>- {obj}</p>
+                                    {separador(props.vaga.beneficios).map((b) => (
+                                        <p>- {b}</p>
                                     ))}
                                 </Typography>
                             </AccordionDetails>
@@ -179,7 +181,7 @@ const VagasModal = (props) => {
                                     fadedOpacity={20}
                                     className="num"
                                     width={100}
-                                    value={props.vaga.score}
+                                    value={70}
                                     maxValue={100}
                                 />
                             </div>

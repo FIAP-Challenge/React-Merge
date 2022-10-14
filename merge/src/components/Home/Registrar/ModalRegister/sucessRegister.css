@@ -1,0 +1,87 @@
+.containerErro {
+    /* background: #ff000091; */
+    padding: 10px 20px;
+    text-align: center;
+    font-family: 'Manjari', sans-serif;
+    margin: 10px;
+    background: rgb(255 0 0 / 50%);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgb(255 0 0);
+}
+.modal-overlay-sucess {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* From https://css.glass */
+    background: rgba(66, 66, 66, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(66, 66, 66, 0.3);
+}
+
+hr.style-two-modal {
+    margin: 10px 0px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ffffffb5, rgba(0, 0, 0, 0));
+}
+
+
+.align-loading {
+    display: flex;
+    justify-content: center;
+    margin: 19px 0px;
+}
+
+.modal-content-sucess {
+    font-family: 'manjari', sans-serif;
+    border: 1px solid #0a54e3;
+    overflow: auto;
+    height: 20%;
+    background-color: #1b1f25;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+}
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+.closeModal{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+}
+
+.containerHeaderModalSucess {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerCloseModal{
+    /* width: 100%; */
+}

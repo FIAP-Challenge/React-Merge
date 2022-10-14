@@ -9,12 +9,15 @@ import InputMask from 'react-input-mask';
 import api from '../../../Services/api/api';
 import { BiTrash, } from 'react-icons/bi'
 import ButtonInfos from '../../Templates/buttonInfos/ButtonInfos';
-import Disc from '../../dashboard/pages/disc/Disc';
-
+import axios from 'axios';
+import SucessRegister from './ModalRegister/SucessRegister';
+import Menu from '../Menu/Menu';
+import Footer from '../Footer/Footer';
 const Registrar = () => {
     const navigate = useNavigate();
     const [dadosform1, setdadosform1] = useState({});
-    const [dadosform2, setdadosform2] = useState({});
+    const [modalSucess, setModaSucess] = useState(false);
+    const [unificado, setUnificados] = useState({})
     const [cep, setCep] = useState();
     const [goSteps, setGoSteps] = useState(0);
     function buscarCEP(cep) {
@@ -27,12 +30,64 @@ const Registrar = () => {
             });
     }
 
+
+    const handleSubmitRegister = (valordados1, valordados2) => {
+
+        let objeto = {}
+        objeto['nome'] = valordados1.nome
+        objeto['cpf'] = valordados1.cpf.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "")
+        objeto['dtNascimento'] = new Date(valordados1.dataNascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
+        objeto['estadoCivil'] = valordados1.estadoCivil
+        objeto['sexo'] = valordados1.sexo
+        objeto['email'] = valordados1.email
+        objeto['senhaLogin'] = valordados1.senhaLogin
+        objeto['telefone'] = {
+            'ddd': valordados1.celular.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "").substring(0, 3),
+            'numero': valordados1.celular.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "").substring(3, valordados1.celular.length - 1),
+            'tipo': "Pessoal"
+        }
+        objeto['endereco'] = {
+            'cep': valordados1.cep.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, ""),
+            'bairro': valordados1.bairro,
+            'logradouro': valordados1.logradouro,
+            'complemento': valordados1.complemento,
+            'cidade': valordados1.cidade,
+            'estado': valordados1.estado,
+            'siglaEstado': valordados1.siglaEstado,
+            'numeroLogradouro': valordados1.numeroLogradouro
+        }
+
+        objeto['curriculo'] = {
+            data: new Date().toLocaleDateString('pt-BR', { timeZone: 'UTC' }),
+            cursos: valordados2.cursos,
+            formacoes: valordados2.formacoes,
+            idiomas: valordados2.idiomas
+        }
+
+
+        axios.post(`http://localhost:8080/Merge/rest/candidato`, objeto)
+            .then(res => {
+                console.log(res);
+                console.log(res.request.status);
+
+                if (res.request.status == 201) {
+                    { }
+                    setModaSucess(true)
+                    setTimeout(() => {
+                        navigate('/login');
+
+                    }, 3000);
+                }
+            })
+
+    }
     const buscarCEPTESTE = (value) => {
         value = value.replace("-", "");
         buscarCEP(value)
         return cep;
 
     }
+
 
     const minDate = new Date('01/01/1940').toISOString().slice(0, -14);
     const maxDate = new Date().toISOString().slice(0, -14);
@@ -44,33 +99,33 @@ const Registrar = () => {
     const validationSchema = yup.object({
         email: yup
             .string()
-            .required("O E-mail é obrigatório"),
-        nomeCompleto: yup
+            .required("O E-mail é Obrigatório "),
+        nome: yup
             .string()
-            .required("O nome é obrigatório")
+            .required("O nome é Obrigatório ")
             .matches(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/,
                 "Digite corretamente seu nome"
             ),
         celular: yup
             .string()
             .required("Celular é obrigatorio"),
-        numCPF: yup
+        cpf: yup
             .string()
             .min(14, "Deve haver 11 digitos")
             .max(14, "Deve conter apenas 11 digitos")
-            .required("CPF é obrigatório"),
-        dtNascimento: yup
+            .required("CPF é Obrigatório "),
+        dataNascimento: yup
             .date()
             .min(new Date('01/01/1940'), 'A data não permitida')
             .max(new Date(), "A data não pode ser maior que hoje")
-            .required("Data de nascimento é obrigatório"),
-        estCivil: yup
+            .required("Data de nascimento é Obrigatório "),
+        estadoCivil: yup
             .string()
             .required("Selecione um estado civil"),
         sexo: yup
             .string()
             .required("Selecione um sexo"),
-        senha: yup
+        senhaLogin: yup
             .string()
             .required("Senha é obrigatória")
             .min(8, "Senha deve ter 8 digitos")
@@ -84,102 +139,65 @@ const Registrar = () => {
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
                 "A senha deve conter mais de 8 digitos, pelo menos uma letra maiscula e minuscula, um numero e um caractere especial"
-            ).oneOf([yup.ref('senha'), null], 'Senha diferente da de cima'),
+            ).oneOf([yup.ref('senhaLogin'), null], 'Senha diferente da de cima'),
         cep: yup
             .string()
-            .required("obrigatório informar o CEP"),
+            .required("Obrigatório  informar o CEP"),
         logradouro: yup
             .string()
-            .required("obrigatório informar o logradouro"),
-        numero: yup
+            .required("Obrigatório  informar o logradouro"),
+        numeroLogradouro: yup
             .string()
-            .required("Obrigatorio informar o numero do logradouro"),
+            .required("Obrigatorio informar o numero do logradouro")
+            .max(9, 'Número acima do permitido'),
         bairro: yup
             .string()
-            .required("obrigatório informar o bairro"),
+            .required("Obrigatório  informar o bairro"),
         complemento: yup
             .string(),
         cidade: yup
             .string()
-            .required("obrigatório informar a cidade"),
+            .required("Obrigatório  informar a cidade"),
 
         estado: yup
             .string()
-            .required("obrigatório informar o estado"),
-        uf: yup
+            .required("Obrigatório  informar o estado"),
+        siglaEstado: yup
             .string()
-            .required("obrigatório informar o UF")
+            .required("Obrigatório  informar o UF")
     });
 
 
     const validationSchema2 = yup.object({
         idiomas: yup.array().of(
             yup.object().shape({
-                idioma: yup
+                nome: yup
                     .string()
-                    .required("O idioma é obrigatório"),
-                nivel: yup
-                    .string()
-                    .required("Nivel é obrigatório, selecione um")
+                    .required("O idioma é Obrigatório "),
             })
         ),
         formacoes: yup.array().of(
             yup.object().shape({
-                nomeFormacao: yup
+                nome: yup
                     .string()
-                    .required("Nome da formação é obrigatório"),
-                tipo: yup
-                    .string()
-                    .required("O tipo da formação é obrigatório"),
-                nomeInstituição: yup
-                    .string()
-                    .required("O nome da instituição é obrigatório"),
-                dtInicio: yup
-                    .date()
-                    .required("A data de inicio é obrigatório"),
-                dtFim: yup
-                    .date()
-                    .required("A data de conclusão é obrigatório")
-            })
-        ),
-        habilidades: yup.array().of(
-            yup.object().shape({
-                nomeHabilidade: yup
-                    .string()
-                    .required("O nome da habilidade é obrigatório"),
+                    .required("Nome da formação é Obrigatório "),
             })
         ),
         cursos: yup.array().of(
             yup.object().shape({
-                nomeCurso: yup
+                nome: yup
                     .string()
-                    .required("O nome do curso é obrigatório"),
-                nomeInstituiçãoCurso: yup
-                    .string()
-                    .required("O nome da instituição é obrigatório"),
-                numeroCertificado: yup
-                    .string()
-                    .required("O numero do certificado é obrigatório"),
-                descricaoCurso: yup
-                    .string()
-                    .required("A descrição do curso é obrigatório"),
-                cargaHoraria: yup
-                    .string()
-                    .required("A carga horária do curso é obrigatória"),
-                dtInicioCurso: yup
-                    .date()
-                    .required("A data de inicio é obrigatório"),
-                dtFimCurso: yup
-                    .date()
-                    .required("A data de conclusão é obrigatório")
+                    .required("O nome do curso é Obrigatório "),
             })
         )
     })
 
     return (
         <>
+            <Menu />
             <div>
                 <div className='stepper fade-in-image fade-out-image '>
+
                     <Stepper
                         styleConfig={{ activeBgColor: '#14429b', borderRadius: 7, inactiveBgColor: '#2d3138', completedBgColor: '#092b70' }}
                         activeStep={goSteps}
@@ -193,7 +211,7 @@ const Registrar = () => {
                     <div className='containerRegistrarMaster'>
                         <div className='containerRegistrar'>
                             <Formik
-                                initialValues={{ email: dadosform1.email ? dadosform1.email : "", nomeCompleto: dadosform1.nomeCompleto ? dadosform1.nomeCompleto : "", celular: dadosform1.celular ? dadosform1.celular : "", numCPF: dadosform1.numCPF ? dadosform1.numCPF : "", dtNascimento: dadosform1.dtNascimento ? dadosform1.dtNascimento : "", estCivil: dadosform1.estCivil ? dadosform1.estCivil : "", sexo: dadosform1.sexo ? dadosform1.sexo : "", senha: dadosform1.senha ? dadosform1.senha : "", confirmeSenha: dadosform1.confirmeSenha ? dadosform1.confirmeSenha : "", cep: dadosform1.cep ? dadosform1.cep : "", logradouro: dadosform1.logradouro ? dadosform1.logradouro : "", numero: dadosform1.numero ? dadosform1.numero : "", bairro: dadosform1.bairro ? dadosform1.bairro : "", complemento: dadosform1.complemento ? dadosform1.complemento : "", cidade: dadosform1.cidade ? dadosform1.cidade : "", estado: dadosform1.estado ? dadosform1.estado : "", uf: dadosform1.uf ? dadosform1.uf : "" }}
+                                initialValues={{ email: dadosform1.email ? dadosform1.email : "", nome: dadosform1.nome ? dadosform1.nome : "", celular: dadosform1.celular ? dadosform1.celular : "", cpf: dadosform1.cpf ? dadosform1.cpf : "", dataNascimento: dadosform1.dataNascimento ? dadosform1.dataNascimento : "", estadoCivil: dadosform1.estadoCivil ? dadosform1.estadoCivil : "", sexo: dadosform1.sexo ? dadosform1.sexo : "", senhaLogin: dadosform1.senhaLogin ? dadosform1.senhaLogin : "", confirmeSenha: dadosform1.confirmeSenha ? dadosform1.confirmeSenha : "", cep: dadosform1.cep ? dadosform1.cep : "", logradouro: dadosform1.logradouro ? dadosform1.logradouro : "", numeroLogradouro: dadosform1.numeroLogradouro ? dadosform1.numeroLogradouro : "", bairro: dadosform1.bairro ? dadosform1.bairro : "", complemento: dadosform1.complemento ? dadosform1.complemento : "", cidade: dadosform1.cidade ? dadosform1.cidade : "", estado: dadosform1.estado ? dadosform1.estado : "", siglaEstado: dadosform1.siglaEstado ? dadosform1.siglaEstado : "" }}
                                 onSubmit={async (values) => {
                                     await new Promise((r) => setTimeout(r, 500));
                                     if (values) {
@@ -223,11 +241,11 @@ const Registrar = () => {
                                             </div>
 
                                             <div className='formsInputs'>
-                                                <label className='labelRegistrar' htmlFor="nomeCompleto">Nome completo *</label>
+                                                <label className='labelRegistrar' htmlFor="nome">Nome completo *</label>
                                                 <Field
-                                                    value={values.nomeCompleto.toUpperCase()}
-                                                    id="nomeCompleto" className="inputRegistrar" type="text" name="nomeCompleto" placeholder="Nome completo" />
-                                                <ErrorMessage className='errosInputs' component="div" name="nomeCompleto" />
+                                                    value={values.nome.toUpperCase()}
+                                                    id="nome" className="inputRegistrar" type="text" name="nome" placeholder="Nome completo" />
+                                                <ErrorMessage className='errosInputs' component="div" name="nome" />
                                             </div>
 
                                             <div className='formsInputs'>
@@ -236,7 +254,7 @@ const Registrar = () => {
                                                     render={({ field }) => (
                                                         <InputMask className="inputRegistrar"
                                                             {...field}
-                                                            mask="(99) 99999-9999"
+                                                            mask="(099) 99999-9999"
                                                             placeholder='Celular'
                                                             id="celular"
                                                             name="celular"
@@ -248,30 +266,30 @@ const Registrar = () => {
                                             </div>
 
                                             <div className='formsInputs'>
-                                                <label className='labelRegistrar' htmlFor="numCPF">Numero CPF *</label>
-                                                <Field id="numCPF" className="inputRegistrar" type="number" name="numCPF" placeholder="Numero CPF"
+                                                <label className='labelRegistrar' htmlFor="cpf">Numero CPF *</label>
+                                                <Field id="cpf" className="inputRegistrar" type="number" name="cpf" placeholder="Numero CPF"
                                                     render={({ field }) => (
                                                         <InputMask className="inputRegistrar"
                                                             {...field}
                                                             mask="999.999.999-99"
-                                                            id="numCPF"
+                                                            id="cpf"
                                                             placeholder="CPF"
-                                                            name="numCPF"
+                                                            name="cpf"
 
                                                         />
                                                     )} />
-                                                <ErrorMessage className='errosInputs' component="div" name="numCPF" />
+                                                <ErrorMessage className='errosInputs' component="div" name="cpf" />
                                             </div>
 
                                             <div className='formsInputs'>
-                                                <label className='labelRegistrar' htmlFor="dtNascimento">Data de nascimento *</label>
-                                                <Field id="dtNascimento" min={minDate} max={maxDate} className="inputRegistrar" type="date" name="dtNascimento" placeholder="Data de nascimento" />
-                                                <ErrorMessage className='errosInputs' component="div" name="dtNascimento" />
+                                                <label className='labelRegistrar' htmlFor="dataNascimento">Data de nascimento *</label>
+                                                <Field id="dataNascimento" min={minDate} max={maxDate} className="inputRegistrar" type="date" name="dataNascimento" placeholder="Data de nascimento" />
+                                                <ErrorMessage className='errosInputs' component="div" name="dataNascimento" />
                                             </div>
 
                                             <div className='formsInputs'>
-                                                <label className='labelRegistrar' htmlFor="estCivil">Estado civil *</label>
-                                                <Field id="estCivil" className="inputRegistrar" as="select" name="estCivil">
+                                                <label className='labelRegistrar' htmlFor="estadoCivil">Estado civil *</label>
+                                                <Field id="estadoCivil" className="inputRegistrar" as="select" name="estadoCivil">
                                                     <option value="" disabled defaultValue>Selecione</option>
                                                     <option value="Solteiro">Solteiro(a)</option>
                                                     <option value="Casado">Casado(a)</option>
@@ -279,7 +297,7 @@ const Registrar = () => {
                                                     <option value="Viuvo">Viúvo(a)</option>
                                                 </Field>
 
-                                                <ErrorMessage className='errosInputs' component="div" name="estCivil" />
+                                                <ErrorMessage className='errosInputs' component="div" name="estadoCivil" />
                                             </div>
 
                                             <div className='formsInputs'>
@@ -294,9 +312,9 @@ const Registrar = () => {
                                             </div>
 
                                             <div className='formsInputs'>
-                                                <label className='labelRegistrar' htmlFor="senha">Senha *</label>
-                                                <Field id="senha" className="inputRegistrar" type="password" name="senha" placeholder="Senha" />
-                                                <ErrorMessage className='errosInputs' component="div" name="senha" />
+                                                <label className='labelRegistrar' htmlFor="sesenhaLoginnha">Senha *</label>
+                                                <Field id="senhaLogin" className="inputRegistrar" type="password" name="senhaLogin" placeholder="Senha" />
+                                                <ErrorMessage className='errosInputs' component="div" name="senhaLogin" />
                                             </div>
 
                                             <div className='formsInputs'>
@@ -322,6 +340,7 @@ const Registrar = () => {
                                                 <ErrorMessage className='errosInputs' component="div" name="cep" />
                                                 <div className='divDisplayCEP'>
                                                     <button
+                                                        type='button'
                                                         onClick={() => {
                                                             const infosLogradouros = buscarCEPTESTE(values.cep)
 
@@ -329,17 +348,15 @@ const Registrar = () => {
                                                                 values.logradouro = ""
                                                                 values.bairro = ""
                                                                 values.cidade = ""
-                                                                values.uf = ""
+                                                                values.siglaEstado = ""
 
                                                             } else {
                                                                 values.logradouro = infosLogradouros.logradouro
                                                                 values.bairro = infosLogradouros.bairro
                                                                 values.cidade = infosLogradouros.localidade
-                                                                values.uf = infosLogradouros.uf
+                                                                values.siglaEstado = infosLogradouros.uf
                                                             }
 
-                                                            console.log(typeof (infosLogradouros))
-                                                            console.log(infosLogradouros)
                                                         }
                                                         }
                                                         className='buscarCEP'>Buscar CEP</button>
@@ -357,8 +374,8 @@ const Registrar = () => {
 
                                                 <div className='formsInputs numero-logradouro'>
                                                     <label className='labelRegistrar margin-number' htmlFor="numero">Numero *</label>
-                                                    <Field value={values.numero.toUpperCase()} id="numero" className="inputRegistrar" type="text" name="numero" placeholder="Número" />
-                                                    <ErrorMessage className='errosInputs' component="div" name="numero" />
+                                                    <Field value={values.numeroLogradouro.toUpperCase()} id="numero" className="inputRegistrar" type="text" name="numeroLogradouro" placeholder="Número" />
+                                                    <ErrorMessage className='errosInputs' component="div" name="numeroLogradouro" />
                                                 </div>
                                             </div>
 
@@ -393,9 +410,9 @@ const Registrar = () => {
                                                 </div>
 
                                                 <div className='formsInputs uf'>
-                                                    <label className='labelRegistrar margin-number' htmlFor="uf">UF *</label>
-                                                    <Field value={values.uf.toUpperCase()} id="uf" className="inputRegistrar" type="text" name="uf" placeholder="UF" />
-                                                    <ErrorMessage className='errosInputs' component="div" name="uf" />
+                                                    <label className='labelRegistrar margin-number' htmlFor="siglaEstado">UF *</label>
+                                                    <Field value={values.siglaEstado.toUpperCase()} id="siglaEstado" className="inputRegistrar" type="text" name="siglaEstado" placeholder="UF" />
+                                                    <ErrorMessage className='errosInputs' component="div" name="siglaEstado" />
                                                 </div>
                                             </div>
 
@@ -429,48 +446,30 @@ const Registrar = () => {
 
                                     idiomas: [
                                         {
-                                            idioma: '',
-                                            nivel: '',
+                                            nome: '',
                                         },
                                     ],
                                     formacoes: [
                                         {
-                                            nomeFormacao: '',
-                                            tipo: '',
-                                            nomeInstituição: '',
-                                            dtInicio: '',
-                                            dtFim: ''
-                                        },
-                                    ],
-                                    habilidades: [
-                                        {
-                                            nomeHabilidade: '',
+                                            nome: '',
+
                                         },
                                     ],
                                     cursos: [
                                         {
-                                            nomeCurso: '',
-                                            nomeInstituiçãoCurso: '',
-                                            numeroCertificado: '',
-                                            descricaoCurso: '',
-                                            cargaHoraria: '',
-                                            dtInicioCurso: '',
-                                            dtFimCurso: ''
-
+                                            nome: '',
                                         },
                                     ]
                                 }}
                                 onSubmit={async (values) => {
                                     await new Promise((r) => setTimeout(r, 500));
-
                                     if (values) {
-                                        setdadosform2(values)
-                                        navigate('/dashboard/disc');
 
-                        
 
                                     }
                                     // alert(JSON.stringify(values, null, 2));
+                                    handleSubmitRegister(dadosform1, values)
+
                                 }}
                                 validationSchema={validationSchema2}
                             >
@@ -502,12 +501,12 @@ const Registrar = () => {
                                                                         <ButtonInfos mensagem="O Idioma pode ser preenchido mais tarde, basta excluir" />
                                                                     </div>
                                                                     <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor="idioma">Idioma *</label>
-                                                                        <Field id="idioma" className="inputRegistrar" type="text" name={`idiomas.${index}.idioma`} placeholder="Idioma" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.idioma`} />
+                                                                        <label className='labelRegistrar' htmlFor={`idiomas.${index}.nome`}>Idioma *</label>
+                                                                        <Field id="nome" className="inputRegistrar" type="text" name={`idiomas.${index}.nome`} placeholder="Idioma" />
+                                                                        <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nome`} />
                                                                     </div>
-                                                                    <div className="col">
-                                                                        <div className='formsInputs '>
+                                                                    {/* <div className="col"> */}
+                                                                    {/* <div className='formsInputs '>
                                                                             <label className='labelRegistrar' htmlFor="nivel">Nível *</label>
                                                                             <Field id="nivel" className="inputRegistrar" as="select" name={`idiomas.${index}.nivel`}>
                                                                                 <option value="" disabled defaultValue>Selecione</option>
@@ -518,8 +517,8 @@ const Registrar = () => {
                                                                             </Field>
 
                                                                             <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nivel`} />
-                                                                        </div>
-                                                                    </div>
+                                                                        </div> */}
+                                                                    {/* </div> */}
                                                                     <div className="displayButton">
                                                                         <button
                                                                             type="button"
@@ -534,7 +533,7 @@ const Registrar = () => {
                                                         <button
                                                             type="button"
                                                             className='button-add'
-                                                            onClick={() => push({ idioma: '', nivel: '' })}
+                                                            onClick={() => push({ nome: '' })}
                                                         >
                                                             Adicionar
                                                         </button>
@@ -558,11 +557,11 @@ const Registrar = () => {
                                                                         <ButtonInfos mensagem="As formações pode ser preenchido mais tarde, basta excluir" />
                                                                     </div>
                                                                     <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor="nomeFormacao">Nome da formação *</label>
-                                                                        <Field id="nomeFormacao" className="inputRegistrar" type="text" name={`formacoes.${index}.nomeFormacao`} placeholder="Nome da formação" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nomeFormacao`} />
+                                                                        <label className='labelRegistrar' htmlFor={`formacoes.${index}.nome`}>Nome da formação *</label>
+                                                                        <Field id={`formacoes.${index}.nome`} className="inputRegistrar" type="text" name={`formacoes.${index}.nome`} placeholder="Nome da formação" />
+                                                                        <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nome`} />
                                                                     </div>
-                                                                    <div className="col">
+                                                                    {/* <div className="col">
                                                                         <div className='formsInputs '>
                                                                             <label className='labelRegistrar' htmlFor="tipo">Tipo formação *</label>
                                                                             <Field id="tipo" className="inputRegistrar" as="select" name={`formacoes.${index}.tipo`}>
@@ -581,25 +580,25 @@ const Registrar = () => {
                                                                             <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.tipo`} />
 
                                                                         </div>
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs '>
+                                                                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="nomeInstituição">Nome da instituição *</label>
                                                                         <Field id="nomeInstituição" className="inputRegistrar" type="text" name={`formacoes.${index}.nomeInstituição`} placeholder="Nome da instituição" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nomeInstituição`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs'>
+                                                                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtInicio">Data inicio *</label>
                                                                         <Field id="dtInicio" min={minDate} className="inputRegistrar" type="date" name={`formacoes.${index}.dtInicio`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.dtInicio`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs'>
+                                                                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtFim">Data conclusão *</label>
                                                                         <Field id="dtFim" min={minDate} className="inputRegistrar" type="date" name={`formacoes.${index}.dtFim`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.dtFim`} />
-                                                                    </div>
+                                                                    </div> */}
 
                                                                     <div className="displayButton">
                                                                         <button
@@ -616,11 +615,7 @@ const Registrar = () => {
                                                             type="button"
                                                             className='button-add'
                                                             onClick={() => push({
-                                                                nomeFormacao: '',
-                                                                tipo: '',
-                                                                nomeInstituição: '',
-                                                                dtInicio: '',
-                                                                dtFim: ''
+                                                                nome: '',
                                                             })}
                                                         >
                                                             Adicionar
@@ -629,48 +624,6 @@ const Registrar = () => {
                                                 )}
                                             </FieldArray>
 
-                                            <hr className='style-two' />
-
-                                            <div className='titulos-curriculo'>
-                                                <h2>Habilidades</h2>
-                                            </div>
-
-                                            <FieldArray name="habilidades">
-                                                {({ insert, remove, push }) => (
-                                                    <div>
-                                                        {values.habilidades.length > 0 &&
-                                                            values.habilidades.map((habilidades, index) => (
-                                                                <div className="containerInputs fade-in-image" key={index}>
-                                                                    <div className='info'>
-                                                                        <ButtonInfos mensagem="As habilidades podem ser preechidas mais tarde, basta excluir-la" />
-                                                                    </div>
-                                                                    <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor="nomeHabilidade">Nome da habilidade *</label>
-                                                                        <Field id="nomeHabilidade" className="inputRegistrar" type="text" name={`habilidades.${index}.nomeHabilidade`} placeholder="Nome da habilidade" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`habilidades.${index}.nomeHabilidade`} />
-                                                                    </div>
-
-                                                                    <div className="displayButton">
-                                                                        <button
-                                                                            type="button"
-                                                                            className='button-remove'
-                                                                            onClick={() => remove(index)}
-                                                                        >
-                                                                            <BiTrash className='iconTrash' />
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        <button
-                                                            type="button"
-                                                            className='button-add'
-                                                            onClick={() => push({ nomeHabilidade: '' })}
-                                                        >
-                                                            Adicionar
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </FieldArray>
 
 
                                             <hr className='style-two' />
@@ -689,46 +642,46 @@ const Registrar = () => {
                                                                         <ButtonInfos mensagem="Os cursos podem ser preenchidos mais tarde, basta excluir-la" />
                                                                     </div>
                                                                     <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor="nomeCurso">Nome do curso *</label>
-                                                                        <Field id="nomeCurso" className="inputRegistrar" type="text" name={`cursos.${index}.nomeCurso`} placeholder="Nome do curso" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nomeCurso`} />
+                                                                        <label className='labelRegistrar' htmlFor={`cursos.${index}.nome`} >Nome do curso *</label>
+                                                                        <Field id={`cursos.${index}.nome`} className="inputRegistrar" type="text" name={`cursos.${index}.nome`} placeholder="Nome do curso" />
+                                                                        <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nome`} />
                                                                     </div>
 
-                                                                    <div className='formsInputs '>
+                                                                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="nomeInstituiçãoCurso">Nome da instituiçao *</label>
                                                                         <Field id="nomeInstituiçãoCurso" className="inputRegistrar" type="text" name={`cursos.${index}.nomeInstituiçãoCurso`} placeholder="Nome da instituiçao" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nomeInstituiçãoCurso`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs '>
+                                                                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="numeroCertificado">Número do certificado *</label>
                                                                         <Field id="numeroCertificado" className="inputRegistrar" type="text" name={`cursos.${index}.numeroCertificado`} placeholder="Número do certificado" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.numeroCertificado`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs '>
+                                                                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="descricaoCurso">Descreva sobre o curso *</label>
                                                                         <Field id="descricaoCurso" className="inputRegistrar" type="text" name={`cursos.${index}.descricaoCurso`} placeholder="Descreva sobre o curso" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.descricaoCurso`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs '>
+                                                                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="cargaHoraria">Carga horaria *</label>
                                                                         <Field id="cargaHoraria" className="inputRegistrar" type="text" name={`cursos.${index}.cargaHoraria`} placeholder="Carga horaria" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.cargaHoraria`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs'>
+                                                                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtInicio">Data inicio *</label>
                                                                         <Field id="dtInicio" min={minDate} className="inputRegistrar" type="date" name={`cursos.${index}.dtInicioCurso`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.dtInicioCurso`} />
-                                                                    </div>
+                                                                    </div> */}
 
-                                                                    <div className='formsInputs'>
+                                                                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtFim">Data conclusão *</label>
                                                                         <Field id="dtFim" min={minDate} className="inputRegistrar" type="date" name={`cursos.${index}.dtFimCurso`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.dtFimCurso`} />
-                                                                    </div>
+                                                                    </div> */}
 
                                                                     <div className="displayButton">
                                                                         <button
@@ -745,13 +698,7 @@ const Registrar = () => {
                                                             type="button"
                                                             className='button-add'
                                                             onClick={() => push({
-                                                                nomeCurso: '',
-                                                                nomeInstituiçãoCurso: '',
-                                                                numeroCerticado: '',
-                                                                descricaoCurso: '',
-                                                                cargaHoraria: '',
-                                                                dtInicioCurso: '',
-                                                                dtFimCurso: ''
+                                                                nome: '',
                                                             })}
                                                         >
                                                             Adicionar
@@ -763,7 +710,7 @@ const Registrar = () => {
 
 
                                             <div className='containerButton'>
-                                                <button className='buttonNext' type="submit">Registrar-se</button>
+                                                <button className='buttonNext'>Registrar-se</button>
                                             </div>
                                         </Form>
                                     </div>
@@ -773,9 +720,10 @@ const Registrar = () => {
 
                     </div>
                 )}
-               
+
             </div>
 
+            <Footer />
         </>
     )
 }
