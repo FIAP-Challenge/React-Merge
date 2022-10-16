@@ -14,19 +14,64 @@ import ReactStoreIndicator from 'react-score-indicator'
 import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos'
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthContext";
+import axios from 'axios';
+import { termometro } from '../../../function/functionTermometro';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 
-set
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 const VagasModal = (props) => {
     const [modalIsOpen, setIsOpen] = useState(false)
     const { candidato, setCandidato } = useContext(AuthContext)
+    const [termetro, setTermetro] = useState(0)
+    const [temperatura, setTemperatura] = useState(0);
+    const [candidatura, setCandidatura] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [mensagem, setMensagem] = useState("");
+    const [severity, setSeverity] = useState("");
+
+
+    useEffect(() => {
+       
+
+        carregaDados()
+
+    }, [])
+
+    const carregaDados = async () => {
+        axios
+            .get(`http://localhost:8080/Merge/rest/candidatura/vaga=${props.vaga.codigo}&candidato=${candidato.codigo}`)
+            .then(response => {
+                return response.status
+            })
+            .then(() => {
+                setCandidatura(false)
+            })
+            .catch(() => {
+                setCandidatura(true)
+            })
+    }
+    console.log(candidato)
+    console.log(props)
+    console.log(candidatura)
+
+
     const openModal = () => {
         var div = document.querySelector('html');
         div.style.overflow = 'hidden'
         setIsOpen(true);
     }
 
+    console.log(props)
     const closeModal = () => {
         var div = document.querySelector('html');
         div.style.overflow = 'auto'
@@ -34,7 +79,43 @@ const VagasModal = (props) => {
 
     }
 
-    console.log(candidato)
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+
+    async function handleCandidatura() {
+        let objeto = {}
+        objeto['codigoCandidato'] = candidato.codigo;
+        objeto['codigoVaga'] = props.vaga.codigo
+        objeto['score'] = termometro(props.vaga.requisitos, {}, candidato, false)
+    
+        try {
+            let res = await axios({
+                method: 'post',
+                url: 'http://localhost:8080/Merge/rest/candidatura',
+                data: objeto
+            });
+            let data = res.data;
+            setOpen(true)
+            setSeverity("success")
+            setMensagem("Candidatado com sucesso!")
+
+            return data;
+        } catch (error) {
+
+            setOpen(true)
+            setSeverity("error")
+            setMensagem("Falha em se candidatar, tente novamente!")
+
+            return error.response;
+        }
+    }
+
     const separador = (string) => {
         let array = string.split(",")
         return array
@@ -42,6 +123,15 @@ const VagasModal = (props) => {
     Modal.setAppElement('#root');
     return (
         <div className='containerModal'>
+
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {mensagem}
+                    </Alert>
+                </Snackbar>
+            </Stack>
+
             <div onClick={openModal} className="containerButtonVisualizar">
                 <button className='btn-vagas' type="submit">Visualizar</button>
             </div>
@@ -71,13 +161,9 @@ const VagasModal = (props) => {
 
                 </div>
 
-
-
-
                 <div className='containerBodyModal'>
                     <div className='descricao'>
                         <hr className='style-two-modal' />
-
                         <div className='infos'>
 
                             <div className='info-content'>
@@ -139,8 +225,8 @@ const VagasModal = (props) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
-                                    {props.vaga.requisitos.map((obj) => (
-                                        <p>- {obj.nome}</p>
+                                    {props.vaga.requisitos.map((obj, i) => (
+                                        <span className='span-requisitos'>- {obj.nome}</span>
                                     ))}
                                 </Typography>
                             </AccordionDetails>
@@ -155,8 +241,8 @@ const VagasModal = (props) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
-                                    {separador(props.vaga.beneficios).map((b) => (
-                                        <p>- {b}</p>
+                                    {separador(props.vaga.beneficios).map((b, i) => (
+                                        <span className='span-requisitos' key={i}>- {b}</span>
                                     ))}
                                 </Typography>
                             </AccordionDetails>
@@ -173,7 +259,7 @@ const VagasModal = (props) => {
                         <div className='termoter-content'>
                             <div className='tooltip-termoter'>
                                 <ButtonInfos className="tool-tip"
-                                mensagem="O Termômetro é o seu indice de sucesso com a vaga, ele é calculado de acordo com os requisitos estabelecidos pela empresa que criou a vaga" />
+                                    mensagem="O Termômetro é o seu indice de sucesso com a vaga, ele é calculado de acordo com os requisitos estabelecidos pela empresa que criou a vaga" />
                             </div>
 
                             <div>
@@ -181,7 +267,7 @@ const VagasModal = (props) => {
                                     fadedOpacity={20}
                                     className="num"
                                     width={100}
-                                    value={70}
+                                    value={termometro(props.vaga.requisitos, {}, candidato, false)}
                                     maxValue={100}
                                 />
                             </div>
@@ -190,10 +276,21 @@ const VagasModal = (props) => {
 
                     </div>
 
-
-
                     <div className="containerButtonVisualizar buttonBottom">
-                        <button className='btn-vagas' type="submit">Increva-se</button>
+                        {candidatura ? (
+                            <button onClick={() => {
+                                try{
+                                    setCandidatura(false)
+                                    handleCandidatura()
+                                }catch(err){
+
+                                }
+                              
+                            }} className='btn-vagas' type="submit">Increva-se</button>
+                        ):
+                            <button disabled className='btn-vagas-realizada'>Candidatura realizada!</button>
+                        }
+                        
                     </div>
 
 

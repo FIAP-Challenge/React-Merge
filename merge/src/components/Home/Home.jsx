@@ -69,7 +69,7 @@ const Home = () => {
                 <div>
                     <h1 className="fade-in-image">Facilidade e praticidade no jeito de usar e de pensar</h1>
                     <div className="sub-text-box fade-in-image">
-                        <p >Com a interação da inteligencia artificial, vamos conseguir vagas melhores para você, alem da facilidade de você ter a usabilidade do nosso sistema</p>
+                        <p >Com a interação do usuário e a criação do termômetro, vamos conseguir vagas melhores para você, alem da facilidade de você ter a usabilidade do nosso sistema</p>
                     </div>
 
                     <div className="coluna-hover fade-in-image">
@@ -87,7 +87,7 @@ const Home = () => {
                                 <h6>Autonomia</h6>
                             </div>
                             <div>
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim assumenda et quod ea? </p>
+                                <p>Com direcionamento do termômetro o candidato terá autônomia para escolher a vaga que mais se identificar.</p>
                             </div>
 
                         </div>
@@ -96,7 +96,7 @@ const Home = () => {
                                 <h6>Ganho de tempo</h6>
                             </div>
                             <div>
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim assumenda et quod ea?</p>
+                                <p>interface intuitiva e dinâmica, com redução de gasto de tempo para se candidatar ou recrutar.</p>
                             </div>
 
                         </div>

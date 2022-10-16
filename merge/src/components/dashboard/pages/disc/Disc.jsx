@@ -77,7 +77,6 @@ const Disc = () => {
                     }}
                     onSubmit={async (values) => {
                         await new Promise((r) => setTimeout(r, 500));
-                        console.log(JSON.stringify(values, null, 2))
                         alert(JSON.stringify(values, null, 2));
                     }}
                     validationSchema={validationSchema}
@@ -107,7 +106,13 @@ const Disc = () => {
                                                             <div className="discRespostas" >
                                                                 <div className="separator">
                                                                     <div>
-                                                                        <Field name={`perguntas.${index}.respostaA`} className="selectFieldDisc" as="select" id="respostaA">
+                                                                        <Field 
+                                                                         name={`perguntas.${index}.respostaA`} 
+                                                                         className="selectFieldDisc" 
+                                                                         as="select" 
+                                                                         id="respostaA"
+                                                                
+                                                                         >
                                                                             <option value="" defaultValue></option>
                                                                             <option value="1">1</option>
                                                                             <option value="2">2</option>
@@ -199,11 +204,12 @@ const Disc = () => {
                                                     activeStep={activeStep}
                                                     nextButton={
                                                         <Button
-
+                                                       
                                                             className="buttonAvançar"
                                                             size="small"
-
+                                                            // type="submit"
                                                             onClick={() => {
+                                                               
                                                                 push({
                                                                     pergunta: (activeStep + 2),
                                                                     respostaA: '',
@@ -212,6 +218,8 @@ const Disc = () => {
                                                                     respostaD: ''
                                                                 })
                                                                 handleNext()
+
+
                                                             }}
                                                             disabled={activeStep === maxSteps - 1}
                                                         >
@@ -225,7 +233,7 @@ const Disc = () => {
                                                     }
                                                     backButton={
                                                         <Button
-                                                            
+
                                                             className="buttonVoltar"
                                                             size="small"
 
@@ -252,6 +260,7 @@ const Disc = () => {
                             </FieldArray>
 
                             <div className='containerButton'>
+
                                 <button className='buttonNext' type="submit">Enviar</button>
                             </div>
 

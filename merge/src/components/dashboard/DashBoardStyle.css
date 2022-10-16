@@ -17,6 +17,26 @@
     
 }
 
+.usuario-login {
+    display: flex;
+    border-radius: 7px;
+    position: absolute;
+    right: 23px;
+    font-size: 20px;
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    justify-content: center;
+    transition: all .1s ease-in-out;
+}
+
+
+
+.close-layout{
+    display: none;
+}
+
+
 .menu-bars {
     margin-left: 1rem;
     font-size: 2rem;

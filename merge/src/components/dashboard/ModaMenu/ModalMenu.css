@@ -1,0 +1,48 @@
+.usuario-login {
+    display: flex;
+    border-radius: 7px;
+    position: absolute;
+    right: 23px;
+    font-size: 20px;
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    justify-content: center;
+    transition: all .1s ease-in-out;
+    top: 21px;
+}
+
+.usuario-login > svg {
+    fill: rgb(0 133 255 / 93%);
+    
+}
+
+.usuario-login:hover{
+    background-color: hsl(0deg 0% 100% / 20%);
+    cursor: pointer;
+    color: #efeff1;
+}
+
+
+.show-layout-options {
+
+    position: absolute;
+    width: 190px;
+    background: #302e2e;
+    right: 20px;
+    top: 63px;
+}
+
+.show-layout-options li {
+    transition: all .2s ease-in-out;
+    padding: 12px;
+    list-style: none;
+}
+.show-layout-options li:hover {
+    cursor: pointer;
+    border: 1px solid #0a54e3;
+    background-color: #1a85ff8c;
+}
+
+
+

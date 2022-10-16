@@ -9,10 +9,17 @@ import * as AiIcons from "react-icons/ai"
 import { useState, useContext } from "react";
 import { AuthContext } from "../../../AuthContext";
 import axios from 'axios';
-import Menu from './../Menu/Menu'
-import Footer from './../Footer/Footer'
+import Menu from '../Menu/Menu'
+import Footer from '../Footer/Footer'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+const verificarLocalStorageCandidato = JSON.parse(localStorage.getItem("__SESSION__"))
 
 
 const validationSchema = yup.object({
@@ -20,87 +27,86 @@ const validationSchema = yup.object({
     email: yup
         .string()
         .required("O e-mail é obrigatório"),
-    senhaLogin: yup
+    senha: yup
         .string()
         .required("A senha é obrigatoria")
 
 });
 
 const Login = () => {
-    const { setAuth, auth, candidato, setCandidato } = useContext(AuthContext)
-
-
     const navigate = useNavigate();
-    const [mostraErro, setMostraErro] = useState(false);
-    const [erro, setErro] = useState(
-        <div className="containerErro">
-            <div>
-                <h2>Falha no login</h2>
-            </div>
-            <hr className='style-two-modal' />
-            <p>Falha na autenticação
-                OBS: na fase de teste para autenticar:  <br />
-                <b>E-mail: </b>  teste@fiap.com.br <br />
-                <b>senha: </b>12345678
+    const { setAuth, setCandidato } = useContext(AuthContext)
+    const [open, setOpen] = useState(false);
+    const [mensagem, setMensagem] = useState("");
+    const [severity, setSeverity] = useState("");
 
-            </p>
-        </div>)
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+    // if (verificarLocalStorageCandidato) {
+    //     setAuth(true)
+    //     setCandidato(verificarLocalStorageCandidato)
+    //     navigate("/")
+    // }
+
 
 
     async function handleLogin(objeto) {
         try {
             let res = await axios({
                 method: 'post',
-                url: 'http://localhost:8080/Merge/rest/candidato',
+                url: 'http://localhost:8080/Merge/rest/login',
                 data: objeto
             });
             let data = res.data;
-            alert("Sucesso!")
+            // alert("Sucesso!")
             setCandidato({})
-            setCandidato(res.data)
-            setAuth(true)
-            navigate("/dashboard/vagas")
+            if (res.data.tipoLogin) {
+                setCandidato(res.data)
 
+                setAuth(true)
+                localStorage.setItem('__SESSION__', JSON.stringify(res.data));
+                navigate("/dashboard/vagas")
+
+
+            } else {
+            }
             return data;
         } catch (error) {
-            setMostraErro(true)
-            // alert("Falha na auth")
-            console.log(error.response); // this is the main part. Use the response property from the error object
+            setOpen(true)
+            setSeverity("error")
+            setMensagem("Falha na autenticação, tente novamente!")
+
             return error.response;
         }
 
     }
-
-
     return (
-        <>  
-            <Menu/>
+        <>
+
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {mensagem}
+                    </Alert>
+                </Snackbar>
+            </Stack>
+            <Menu />
             <div className="containerLoginMaster fade-in-image">
                 <div className="containerLogin">
                     <div className="Logo-div">
                         <Link to="/"><img className="logoMerge" src={logoMerge} alt="Logotipo Merge" /></Link>
                     </div>
                     <Formik
-                        initialValues={{ email: "", senhaLogin: "" }}
+                        initialValues={{ email: "", senha: "" }}
                         onSubmit={async (values) => {
                             await new Promise((r) => setTimeout(r, 500));
                             handleLogin(values)
 
-
-                            // if (values) {
-                            //     if (values.email === 'teste@fiap.com.br' && values.senha === "12345678") {
-                            //         navigate('/dashboard/vagas');
-                            //     }
-                            //     else {
-                            //         setMostraErro(true)
-
-                            //     }
-
-
-                            //     // navigate("/dashboard/noticias")
-                            // }
-
-                            // alert(JSON.stringify(values, null, 2));
                         }}
                         validationSchema={validationSchema}
                     >
@@ -121,21 +127,15 @@ const Login = () => {
                                         <ErrorMessage className='errosInputs' component="div" name="email" />
                                     </div>
                                     <div className='formsInputsLogin'>
-                                        <label className='labelRegistrar' htmlFor="senhaLogin">Senha *</label>
-                                        <Field id="senhaLogin" className="inputRegistrar" type="password" name="senhaLogin" placeholder="Senha" />
-                                        <ErrorMessage className='errosInputs' component="div" name="senhaLogin" />
+                                        <label className='labelRegistrar' htmlFor="senha">Senha *</label>
+                                        <Field id="senha" className="inputRegistrar" type="password" name="senha" placeholder="Senha" />
+                                        <ErrorMessage className='errosInputs' component="div" name="senha" />
                                     </div>
                                     <div className="forgotContainer">
 
                                         <Link className="forgot-password" to="/esqueciSenha">Esqueci a senha</Link>
 
                                     </div>
-
-                                    {mostraErro ? erro : ""}
-
-
-
-
                                     <div className='buttonLoginContainer'>
                                         <button className='btn-login' type="submit">Login</button>
                                     </div>
@@ -166,8 +166,8 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            
-            <Footer/>
+
+            <Footer />
         </>
     )
 

@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { SidebarDate } from "./SidebarDate";
 import { IconContext } from 'react-icons'
 import mergeLogo from './../../Assets/Merge.svg'
+import ModalMenu from "./ModaMenu/ModalMenu";
 
 const Dashboard = () => {
 
@@ -21,6 +22,7 @@ const Dashboard = () => {
                     </NavLink>
                     <img className="merge-logo" src={mergeLogo} alt="" />
                 </div>
+                <ModalMenu/>
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className="nav-menu-items" onClick={showSideBar}>
                         <li className="navbar-toggle">

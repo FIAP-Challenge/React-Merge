@@ -1,25 +1,38 @@
-
-import { Stepper, Step } from 'react-form-stepper';
-import './registrarStyles.css'
-import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import './ModaAtualizar.css'
+import React, { useState, useContext } from 'react';
+import * as AiIcons from "react-icons/ai"
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as yup from "yup";
-import { useNavigate, Link, json } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import InputMask from 'react-input-mask';
-import api from '../../../Services/api/api';
-import { BiTrash, } from 'react-icons/bi'
-import ButtonInfos from '../../Templates/buttonInfos/ButtonInfos';
+import { AuthContext } from "./../../../AuthContext";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 import axios from 'axios';
-import SucessRegister from './ModalRegister/SucessRegister';
+import { Stepper, Step } from 'react-form-stepper';
+import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos';
+import { BiTrash, } from 'react-icons/bi'
+import api from '../../../Services/api/api';
 
-
-const Registrar = () => {
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+const ModalAtualizar = () => {
+    const { candidato, setCandidato } = useContext(AuthContext)
     const navigate = useNavigate();
     const [dadosform1, setdadosform1] = useState({});
     const [modalSucess, setModaSucess] = useState(false);
     const [unificado, setUnificados] = useState({})
     const [cep, setCep] = useState();
     const [goSteps, setGoSteps] = useState(0);
+    const [open, setOpen] = useState(true);
+    const [mensagem, setMensagem] = useState("");
+    const [severity, setSeverity] = useState("");
+    Modal.setAppElement('#root');
     function buscarCEP(cep) {
         cep = cep.toString();
         api
@@ -30,11 +43,7 @@ const Registrar = () => {
             });
     }
 
-
-
-
-    const handleSubmitRegister = (valordados1, valordados2) => {
-
+    const handleSubmitUpdate = async (valordados1) => {
         let objeto = {}
         objeto['nome'] = valordados1.nome
         objeto['cpf'] = valordados1.cpf.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "")
@@ -45,7 +54,7 @@ const Registrar = () => {
         objeto['senhaLogin'] = valordados1.senhaLogin
         objeto['telefone'] = {
             'ddd': valordados1.celular.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "").substring(0, 3),
-            'numero': valordados1.celular.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "").substring(3, valordados1.celular.length - 1),
+            'numero': valordados1.celular.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "").substring(3, 12),
             'tipo': "Pessoal"
         }
         objeto['endereco'] = {
@@ -58,50 +67,68 @@ const Registrar = () => {
             'siglaEstado': valordados1.siglaEstado,
             'numeroLogradouro': valordados1.numeroLogradouro
         }
+        try {
+            let res = await axios({
+                method: 'put',
+                url: `http://localhost:8080/Merge/rest/candidato/${candidato.codigo}`,
+                data: objeto
+            });
+            let data = res.data;
+            setOpen(true)
+            setSeverity("success")
+            setMensagem("Atualizado com sucesso")
+            closeModal()
 
-        objeto['curriculo'] = {
-            data: new Date().toLocaleDateString('pt-BR', { timeZone: 'UTC' }),
-            cursos: valordados2.cursos,
-            formacoes: valordados2.formacoes,
-            idiomas: valordados2.idiomas
+            return data;
+        } catch (error) {
+            setOpen(true)
+            setSeverity("error")
+            setMensagem("Falha na atualização")
+
+            return error.response;
         }
-        console.log(top100Films)
-
-        axios.post(`http://localhost:8080/Merge/rest/candidato`, objeto)
-            .then(res => {
-                console.log(res);
-                console.log(res.request.status);
-
-                if (res.request.status == 201) {
-                    { }
-                    setModaSucess(true)
-                    setTimeout(() => {
-                        navigate('/login');
-
-                    }, 3000);
-                }
-            })
 
     }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
     const buscarCEPTESTE = (value) => {
         value = value.replace("-", "");
         buscarCEP(value)
         return cep;
 
     }
-
-
     const minDate = new Date('01/01/1940').toISOString().slice(0, -14);
     const maxDate = new Date().toISOString().slice(0, -14);
 
 
+    const [modalIsOpen, setIsOpen] = useState(true)
+
+    const openModal = () => {
+
+        setIsOpen(true);
+    }
+    const closeModal = () => {
+        setIsOpen(false);
+
+    }
 
 
+    if (modalIsOpen) {
+        var div = document.querySelector('html');
+        div.style.overflow = 'hidden'
+    }else{
+        var div = document.querySelector('html');
+        div.style.overflow = 'auto'
+    }
 
     const validationSchema = yup.object({
         email: yup
-            .string()
-            .required("O E-mail é Obrigatório "),
+            .string(),
+        // .required("O E-mail é Obrigatório "),
         nome: yup
             .string()
             .required("O nome é Obrigatório ")
@@ -112,10 +139,10 @@ const Registrar = () => {
             .string()
             .required("Celular é obrigatorio"),
         cpf: yup
-            .string()
-            .min(14, "Deve haver 11 digitos")
-            .max(14, "Deve conter apenas 11 digitos")
-            .required("CPF é Obrigatório "),
+            .string(),
+        // .min(14, "Deve haver 11 digitos")
+        // .max(14, "Deve conter apenas 11 digitos")
+        // .required("CPF é Obrigatório "),
         dataNascimento: yup
             .date()
             .min(new Date('01/01/1940'), 'A data não permitida')
@@ -194,31 +221,57 @@ const Registrar = () => {
         )
     })
 
-    return (
-        <>
-            <div>
-                <div className='stepper fade-in-image fade-out-image '>
 
-                    <Stepper
-                        styleConfig={{ activeBgColor: '#14429b', borderRadius: 7, inactiveBgColor: '#2d3138', completedBgColor: '#092b70' }}
-                        activeStep={goSteps}
-                        connectorStyleConfig={{ activeColor: '#5b91ff', completedColor: '#5b91ff' }}
-                        connectorStateColors={true}>
-                        <Step onClick={() => setGoSteps(0)} label="Dados do candidato" />
-                        <Step onClick={() => setGoSteps(1)} label="Curriculo" />
-                    </Stepper>
+    return (
+        <div className='containerModal'>
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {mensagem}
+                    </Alert>
+                </Snackbar>
+            </Stack>
+            {/* <button onClick={openModal}>abir</button> */}
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Example modal"
+                overlayClassName="modal-overlay-atualizar"
+                className="modal-content"
+            >
+                <div className='containerHeaderModal-atualizar'>
+                    <div className='containerCloseModal-atualizar'>
+                        <button className='closeModal' onClick={closeModal}><AiIcons.AiOutlineClose /></button>
+                    </div>
                 </div>
-                {goSteps === 0 && (
-                    <div className='containerRegistrarMaster'>
-                        <div className='containerRegistrar'>
+                <div>
+                    <div className='stepper fade-in-image fade-out-image '>
+
+
+                        <div>
+                            <h1>Atualização de dados</h1>
+                        </div>
+                        <hr className='style-two-modal' />
+                        {/* <Stepper
+                            hidden
+                            styleConfig={{ activeBgColor: '#14429b', borderRadius: 7, inactiveBgColor: '#2d3138', completedBgColor: '#092b70' }}
+                            activeStep={goSteps}
+                            connectorStyleConfig={{ activeColor: '#5b91ff', completedColor: '#5b91ff' }}
+                            connectorStateColors={true}>
+                            <Step onClick={() => setGoSteps(0)} label="Dados do candidato" />
+                            <Step onClick={() => setGoSteps(1)} label="Curriculo" />
+                        </Stepper> */}
+                    </div>
+                    {goSteps === 0 && (
+                        <div className='containerRegistrarMaster'>
+
                             <Formik
-                                initialValues={{ email: dadosform1.email ? dadosform1.email : "", nome: dadosform1.nome ? dadosform1.nome : "", celular: dadosform1.celular ? dadosform1.celular : "", cpf: dadosform1.cpf ? dadosform1.cpf : "", dataNascimento: dadosform1.dataNascimento ? dadosform1.dataNascimento : "", estadoCivil: dadosform1.estadoCivil ? dadosform1.estadoCivil : "", sexo: dadosform1.sexo ? dadosform1.sexo : "", senhaLogin: dadosform1.senhaLogin ? dadosform1.senhaLogin : "", confirmeSenha: dadosform1.confirmeSenha ? dadosform1.confirmeSenha : "", cep: dadosform1.cep ? dadosform1.cep : "", logradouro: dadosform1.logradouro ? dadosform1.logradouro : "", numeroLogradouro: dadosform1.numeroLogradouro ? dadosform1.numeroLogradouro : "", bairro: dadosform1.bairro ? dadosform1.bairro : "", complemento: dadosform1.complemento ? dadosform1.complemento : "", cidade: dadosform1.cidade ? dadosform1.cidade : "", estado: dadosform1.estado ? dadosform1.estado : "", siglaEstado: dadosform1.siglaEstado ? dadosform1.siglaEstado : "" }}
+                                initialValues={{ email: dadosform1.email ? dadosform1.email : candidato.email, nome: dadosform1.nome ? dadosform1.nome : candidato.nome, celular: dadosform1.celular ? dadosform1.celular : candidato.telefone.ddd + candidato.telefone.numero, cpf: dadosform1.cpf ? dadosform1.cpf : candidato.cpf, dataNascimento: dadosform1.dataNascimento ? dadosform1.dataNascimento : candidato.dtNascimento.replaceAll("00", "").replace("::", "").trim(), estadoCivil: dadosform1.estadoCivil ? dadosform1.estadoCivil : candidato.estadoCivil, sexo: dadosform1.sexo ? dadosform1.sexo : candidato.sexo, senhaLogin: dadosform1.senhaLogin ? dadosform1.senhaLogin : candidato.senhaLogin, confirmeSenha: dadosform1.confirmeSenha ? dadosform1.confirmeSenha : candidato.senhaLogin, cep: dadosform1.cep ? dadosform1.cep : candidato.endereco.cep, logradouro: dadosform1.logradouro ? dadosform1.logradouro : candidato.endereco.logradouro, numeroLogradouro: dadosform1.numeroLogradouro ? dadosform1.numeroLogradouro : candidato.endereco.numeroLogradouro, bairro: dadosform1.bairro ? dadosform1.bairro : candidato.endereco.bairro, complemento: dadosform1.complemento ? dadosform1.complemento : candidato.endereco.complemento, cidade: dadosform1.cidade ? dadosform1.cidade : candidato.endereco.cidade, estado: dadosform1.estado ? dadosform1.estado : candidato.endereco.estado, siglaEstado: dadosform1.siglaEstado ? dadosform1.siglaEstado : candidato.endereco.siglaEstado }}
                                 onSubmit={async (values) => {
                                     await new Promise((r) => setTimeout(r, 500));
-                                    if (values) {
-                                        setGoSteps(1)
-                                        setdadosform1(values)
-                                    }
+
+                                    handleSubmitUpdate(values)
+
                                     // alert(JSON.stringify(values, null, 2));
                                 }}
 
@@ -237,7 +290,7 @@ const Registrar = () => {
                                         <Form>
                                             <div className='formsInputs'>
                                                 <label className='labelRegistrar' htmlFor="email">E-mail *</label>
-                                                <Field id="email" className="inputRegistrar" type="email" name="email" placeholder="E-mail" />
+                                                <Field disabled id="email" className="inputRegistrar" type="email" name="email" placeholder="E-mail" />
                                                 <ErrorMessage className='errosInputs' component="div" name="email" />
                                             </div>
 
@@ -272,6 +325,7 @@ const Registrar = () => {
                                                     render={({ field }) => (
                                                         <InputMask className="inputRegistrar"
                                                             {...field}
+                                                            disabled
                                                             mask="999.999.999-99"
                                                             id="cpf"
                                                             placeholder="CPF"
@@ -419,137 +473,141 @@ const Registrar = () => {
 
 
                                             <div className='containerButton'>
-                                                <button className='buttonNext' type="submit">Avançar</button>
+                                                <button className='buttonUpdate' type="submit">Atualizar</button>
 
                                             </div>
-
-
-
-
                                         </Form>
                                     </div>
                                 )}
                             </Formik>
 
-
-
-
                         </div>
 
-                    </div>
+                    )}
+                    {/* {goSteps === 1 && (
+                        <div className='containerRegistrarMaster fade-in-image fade-out-image '>
+                            <div className='containerRegistrar fade-out-image '>
+                                <Formik
+                                    initialValues={{
 
-                )}
-                {goSteps === 1 && (
-                    <div className='containerRegistrarMaster fade-in-image fade-out-image '>
-                        <div className='containerRegistrar fade-out-image '>
-                            <Formik
-                                initialValues={{
+                                        idiomas: [
+                                            {
+                                                nome: '',
+                                            },
+                                        ],
+                                        formacoes: [
+                                            {
+                                                nome: '',
 
-                                    idiomas: [
-                                        {
-                                            nome: '',
-                                        },
-                                    ],
-                                    formacoes: [
-                                        {
-                                            nome: '',
-
-                                        },
-                                    ],
-                                    cursos: [
-                                        {
-                                            nome: '',
-                                        },
-                                    ]
-                                }}
-                                onSubmit={async (values) => {
-                                    await new Promise((r) => setTimeout(r, 500));
-                                    if (values) {
+                                            },
+                                        ],
+                                        cursos: [
+                                            {
+                                                nome: '',
+                                            },
+                                        ]
+                                    }}
+                                    onSubmit={async (values) => {
+                                        await new Promise((r) => setTimeout(r, 500));
+                                        if (values) {
 
 
-                                    }
-                                    // alert(JSON.stringify(values, null, 2));
-                                    handleSubmitRegister(dadosform1, values)
+                                        }
+                                        // alert(JSON.stringify(values, null, 2));
+                                        handleSubmitRegister(dadosform1, values)
 
-                                }}
-                                validationSchema={validationSchema2}
-                            >
+                                    }}
+                                    validationSchema={validationSchema2}
+                                >
 
-                                {({
-                                    values,
-                                    errors,
-                                    touched,
-                                    handleChange,
-                                    handleBlur,
-                                    handleSubmit,
-                                    
-                                    isSubmitting,
-                                }) => (
-                                    <div className='fade-in-image fade-out-image '>
-                                        <Form>
-                                            <div className='titulos-curriculo'>
-                                                <h2>Idiomas</h2>
-                                            </div>
-                                            <FieldArray name="idiomas">
-                                                {({ insert, remove, push }) => (
-                                                    <div>
-                                                        {values.idiomas.length > 0 &&
-                                                            values.idiomas.map((idiomas, index) => (
-                                                                <div className="containerInputs fade-in-image" key={index}>
-                                                                    <div className='info'>
-                                                                        <ButtonInfos mensagem="Os cursos podem ser preenchidos mais tarde, basta excluir-la" />
+                                    {({
+                                        values,
+                                        errors,
+                                        touched,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        isSubmitting,
+                                    }) => (
+                                        <div className='fade-in-image fade-out-image '>
+                                            <Form>
+
+                                                <div className='titulos-curriculo'>
+                                                    <h2>Idiomas</h2>
+                                                </div>
+
+                                                <FieldArray name="idiomas">
+                                                     insert, remove, push }) => (
+                                                        <div>
+                                                            {values.idiomas.length > 0 &&
+                                                                values.idiomas.map((idiomas, index) => (
+
+                                                                    <div className="containerInputs fade-in-image" key={index}>
+                                                                        <div className='info'>
+                                                                            <ButtonInfos mensagem="O Idioma pode ser preenchido mais tarde, basta excluir" />
+                                                                        </div>
+                                                                        <div className='formsInputs '>
+                                                                            <label className='labelRegistrar' htmlFor={`idiomas.${index}.nome`}>Idioma *</label>
+                                                                            <Field id="nome" className="inputRegistrar" type="text" name={`idiomas.${index}.nome`} placeholder="Idioma" />
+                                                                            <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nome`} />
+                                                                        </div>
+                                                                         <div className="col">
+                                                                         <div className='formsInputs '>
+                                                                            <label className='labelRegistrar' htmlFor="nivel">Nível *</label>
+                                                                            <Field id="nivel" className="inputRegistrar" as="select" name={`idiomas.${index}.nivel`}>
+                                                                                <option value="" disabled defaultValue>Selecione</option>
+                                                                                <option value="Básico">Básico</option>
+                                                                                <option value="Intermediário">Intermediário</option>
+                                                                                <option value="Avançado">Avançado</option>
+                                                                                <option value="Fluente">Fluente</option>
+                                                                            </Field>
+
+                                                                            <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nivel`} />
+                                                                        </div> */}
+                    {/* </div> 
+                                                                        <div className="displayButton">
+                                                                            <button
+                                                                                type="button"
+                                                                                className='button-remove'
+                                                                                onClick={() => remove(index)}
+                                                                            >
+                                                                                <BiTrash className='iconTrash' />
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor={`idiomas.${index}.nome`} >Nome do idioma *</label>
-                                                                        <Field id={`idiomas.${index}.nome`} className="inputRegistrar" type="text" name={`idiomas.${index}.nome`} placeholder="Nome do curso" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nome`} />
-                                                                    </div>
+                                                                
+                                                            <button
+                                                                type="button"
+                                                                className='button-add'
+                                                                onClick={() => push({ nome: '' })}
+                                                            >
+                                                                Adicionar
+                                                            </button>
+                                                        </div>
+                                                    
+                                                </FieldArray>
 
-                                                                    <div className="displayButton">
-                                                                        <button
-                                                                            type="button"
-                                                                            className='button-remove'
-                                                                            onClick={() => remove(index)}
-                                                                        >
-                                                                            <BiTrash className='iconTrash' />
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        <button
-                                                            type="button"
-                                                            className='button-add'
-                                                            onClick={() => push({
-                                                                nome: '',
-                                                            })}
-                                                        >
-                                                            Adicionar
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </FieldArray>
+                                                <hr className='style-two' />
 
-                                            <hr className='style-two' />
+                                                <div className='titulos-curriculo'>
+                                                    <h2>Formações</h2>
+                                                </div>
 
-                                            <div className='titulos-curriculo'>
-                                                <h2>Formações</h2>
-                                            </div>
-
-                                            <FieldArray name="formacoes">
-                                                {({ insert, remove, push }) => (
-                                                    <div>
-                                                        {values.formacoes.length > 0 &&
-                                                            values.formacoes.map((formacoes, index) => (
-                                                                <div className="containerInputs fade-in-image" key={index}>
-                                                                    <div className='info'>
-                                                                        <ButtonInfos mensagem="As formações pode ser preenchido mais tarde, basta excluir" />
-                                                                    </div>
-                                                                    <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor={`formacoes.${index}.nome`}>Nome da formação *</label>
-                                                                        <Field id={`formacoes.${index}.nome`} className="inputRegistrar" type="text" name={`formacoes.${index}.nome`} placeholder="Nome da formação" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nome`} />
-                                                                    </div>
-                                                                    {/* <div className="col">
+                                                <FieldArray name="formacoes">
+                                                    {({ insert, remove, push }) => (
+                                                        <div>
+                                                            {values.formacoes.length > 0 &&
+                                                                values.formacoes.map((formacoes, index) => (
+                                                                    <div className="containerInputs fade-in-image" key={index}>
+                                                                        <div className='info'>
+                                                                            <ButtonInfos mensagem="As formações pode ser preenchido mais tarde, basta excluir" />
+                                                                        </div>
+                                                                        <div className='formsInputs '>
+                                                                            <label className='labelRegistrar' htmlFor={`formacoes.${index}.nome`}>Nome da formação *</label>
+                                                                            <Field id={`formacoes.${index}.nome`} className="inputRegistrar" type="text" name={`formacoes.${index}.nome`} placeholder="Nome da formação" />
+                                                                            <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nome`} />
+                                                                        </div>
+                                                                        {/* <div className="col">
                                                                         <div className='formsInputs '>
                                                                             <label className='labelRegistrar' htmlFor="tipo">Tipo formação *</label>
                                                                             <Field id="tipo" className="inputRegistrar" as="select" name={`formacoes.${index}.tipo`}>
@@ -570,276 +628,148 @@ const Registrar = () => {
                                                                         </div>
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs '>
+                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="nomeInstituição">Nome da instituição *</label>
                                                                         <Field id="nomeInstituição" className="inputRegistrar" type="text" name={`formacoes.${index}.nomeInstituição`} placeholder="Nome da instituição" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nomeInstituição`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs'>
+                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtInicio">Data inicio *</label>
                                                                         <Field id="dtInicio" min={minDate} className="inputRegistrar" type="date" name={`formacoes.${index}.dtInicio`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.dtInicio`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs'>
+                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtFim">Data conclusão *</label>
                                                                         <Field id="dtFim" min={minDate} className="inputRegistrar" type="date" name={`formacoes.${index}.dtFim`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.dtFim`} />
-                                                                    </div> */}
+                                                                    </div> 
 
-                                                                    <div className="displayButton">
-                                                                        <button
-                                                                            type="button"
-                                                                            className='button-remove'
-                                                                            onClick={() => remove(index)}
-                                                                        >
-                                                                            <BiTrash className='iconTrash' />
-                                                                        </button>
+                                                                        <div className="displayButton">
+                                                                            <button
+                                                                                type="button"
+                                                                                className='button-remove'
+                                                                                onClick={() => remove(index)}
+                                                                            >
+                                                                                <BiTrash className='iconTrash' />
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            ))}
-                                                        <button
-                                                            type="button"
-                                                            className='button-add'
-                                                            onClick={() => push({
-                                                                nome: '',
-                                                            })}
-                                                        >
-                                                            Adicionar
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </FieldArray>
+                                                                ))}
+                                                            <button
+                                                                type="button"
+                                                                className='button-add'
+                                                                onClick={() => push({
+                                                                    nome: '',
+                                                                })}
+                                                            >
+                                                                Adicionar
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </FieldArray>
 
 
 
-                                            <hr className='style-two' />
+                                                <hr className='style-two' />
 
-                                            <div className='titulos-curriculo'>
-                                                <h2>Cursos</h2>
-                                            </div>
+                                                <div className='titulos-curriculo'>
+                                                    <h2>Cursos</h2>
+                                                </div>
 
-                                            <FieldArray name="cursos">
-                                                {({ insert, remove, push }) => (
-                                                    <div>
-                                                        {values.cursos.length > 0 &&
-                                                            values.cursos.map((cursos, index) => (
-                                                                <div className="containerInputs fade-in-image" key={index}>
-                                                                    <div className='info'>
-                                                                        <ButtonInfos mensagem="Os cursos podem ser preenchidos mais tarde, basta excluir-la" />
-                                                                    </div>
-                                                                    <div className='formsInputs '>
-                                                                        <label className='labelRegistrar' htmlFor={`cursos.${index}.nome`} >Nome do curso *</label>
-                                                                        <Field id={`cursos.${index}.nome`} className="inputRegistrar" type="text" name={`cursos.${index}.nome`} placeholder="Nome do curso" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nome`} />
-                                                                    </div>
+                                                <FieldArray name="cursos">
+                                                    {({ insert, remove, push }) => (
+                                                        <div>
+                                                            {values.cursos.length > 0 &&
+                                                                values.cursos.map((cursos, index) => (
+                                                                    <div className="containerInputs fade-in-image" key={index}>
+                                                                        <div className='info'>
+                                                                            <ButtonInfos mensagem="Os cursos podem ser preenchidos mais tarde, basta excluir-la" />
+                                                                        </div>
+                                                                        <div className='formsInputs '>
+                                                                            <label className='labelRegistrar' htmlFor={`cursos.${index}.nome`} >Nome do curso *</label>
+                                                                            <Field id={`cursos.${index}.nome`} className="inputRegistrar" type="text" name={`cursos.${index}.nome`} placeholder="Nome do curso" />
+                                                                            <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nome`} />
+                                                                        </div>
 
-                                                                    {/* <div className='formsInputs '>
+                                                                        {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="nomeInstituiçãoCurso">Nome da instituiçao *</label>
                                                                         <Field id="nomeInstituiçãoCurso" className="inputRegistrar" type="text" name={`cursos.${index}.nomeInstituiçãoCurso`} placeholder="Nome da instituiçao" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nomeInstituiçãoCurso`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs '>
+                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="numeroCertificado">Número do certificado *</label>
                                                                         <Field id="numeroCertificado" className="inputRegistrar" type="text" name={`cursos.${index}.numeroCertificado`} placeholder="Número do certificado" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.numeroCertificado`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs '>
+                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="descricaoCurso">Descreva sobre o curso *</label>
                                                                         <Field id="descricaoCurso" className="inputRegistrar" type="text" name={`cursos.${index}.descricaoCurso`} placeholder="Descreva sobre o curso" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.descricaoCurso`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs '>
+                    {/* <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor="cargaHoraria">Carga horaria *</label>
                                                                         <Field id="cargaHoraria" className="inputRegistrar" type="text" name={`cursos.${index}.cargaHoraria`} placeholder="Carga horaria" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.cargaHoraria`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs'>
+                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtInicio">Data inicio *</label>
                                                                         <Field id="dtInicio" min={minDate} className="inputRegistrar" type="date" name={`cursos.${index}.dtInicioCurso`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.dtInicioCurso`} />
                                                                     </div> */}
 
-                                                                    {/* <div className='formsInputs'>
+                    {/* <div className='formsInputs'>
                                                                         <label className='labelRegistrar' htmlFor="dtFim">Data conclusão *</label>
                                                                         <Field id="dtFim" min={minDate} className="inputRegistrar" type="date" name={`cursos.${index}.dtFimCurso`} placeholder="Data inicio *" />
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.dtFimCurso`} />
-                                                                    </div> */}
+                                                                    </div> 
 
-                                                                    <div className="displayButton">
-                                                                        <button
-                                                                            type="button"
-                                                                            className='button-remove'
-                                                                            onClick={() => remove(index)}
-                                                                        >
-                                                                            <BiTrash className='iconTrash' />
-                                                                        </button>
+                                                                        <div className="displayButton">
+                                                                            <button
+                                                                                type="button"
+                                                                                className='button-remove'
+                                                                                onClick={() => remove(index)}
+                                                                            >
+                                                                                <BiTrash className='iconTrash' />
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            ))}
-                                                        <button
-                                                            type="button"
-                                                            className='button-add'
-                                                            onClick={() => push({
-                                                                nome: '',
-                                                            })}
-                                                        >
-                                                            Adicionar
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </FieldArray>
+                                                                ))}
+                                                            <button
+                                                                type="button"
+                                                                className='button-add'
+                                                                onClick={() => push({
+                                                                    nome: '',
+                                                                })}
+                                                            >
+                                                                Adicionar
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </FieldArray>
 
 
 
-                                            <div className='containerButton'>
-                                                <button className='buttonNext'>Registrar-se</button>
-                                            </div>
-                                        </Form>
-                                    </div>
-                                )}
-                            </Formik>
+                                                <div className='containerButton'>
+                                                    <button className='buttonNext'>Registrar-se</button>
+                                                </div>
+                                            </Form>
+                                        </div>
+                                    )}
+                                </Formik>
+                            </div>
+
                         </div>
+                    )} */}
 
-                    </div>
-                )}
-
-            </div>
-
-        </>
+                </div>
+            </Modal>
+        </div>
     )
 }
-
-const top100Films = [
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: 'Pulp Fiction', year: 1994 },
-    {
-        label: 'The Lord of the Rings: The Return of the King',
-        year: 2003,
-    },
-    { label: 'The Good, the Bad and the Ugly', year: 1966 },
-    { label: 'Fight Club', year: 1999 },
-    {
-        label: 'The Lord of the Rings: The Fellowship of the Ring',
-        year: 2001,
-    },
-    {
-        label: 'Star Wars: Episode V - The Empire Strikes Back',
-        year: 1980,
-    },
-    { label: 'Forrest Gump', year: 1994 },
-    { label: 'Inception', year: 2010 },
-    {
-        label: 'The Lord of the Rings: The Two Towers',
-        year: 2002,
-    },
-    { label: "One Flew Over the Cuckoo's Nest", year: 1975 },
-    { label: 'Goodfellas', year: 1990 },
-    { label: 'The Matrix', year: 1999 },
-    { label: 'Seven Samurai', year: 1954 },
-    {
-        label: 'Star Wars: Episode IV - A New Hope',
-        year: 1977,
-    },
-    { label: 'City of God', year: 2002 },
-    { label: 'Se7en', year: 1995 },
-    { label: 'The Silence of the Lambs', year: 1991 },
-    { label: "It's a Wonderful Life", year: 1946 },
-    { label: 'Life Is Beautiful', year: 1997 },
-    { label: 'The Usual Suspects', year: 1995 },
-    { label: 'Léon: The Professional', year: 1994 },
-    { label: 'Spirited Away', year: 2001 },
-    { label: 'Saving Private Ryan', year: 1998 },
-    { label: 'Once Upon a Time in the West', year: 1968 },
-    { label: 'American History X', year: 1998 },
-    { label: 'Interstellar', year: 2014 },
-    { label: 'Casablanca', year: 1942 },
-    { label: 'City Lights', year: 1931 },
-    { label: 'Psycho', year: 1960 },
-    { label: 'The Green Mile', year: 1999 },
-    { label: 'The Intouchables', year: 2011 },
-    { label: 'Modern Times', year: 1936 },
-    { label: 'Raiders of the Lost Ark', year: 1981 },
-    { label: 'Rear Window', year: 1954 },
-    { label: 'The Pianist', year: 2002 },
-    { label: 'The Departed', year: 2006 },
-    { label: 'Terminator 2: Judgment Day', year: 1991 },
-    { label: 'Back to the Future', year: 1985 },
-    { label: 'Whiplash', year: 2014 },
-    { label: 'Gladiator', year: 2000 },
-    { label: 'Memento', year: 2000 },
-    { label: 'The Prestige', year: 2006 },
-    { label: 'The Lion King', year: 1994 },
-    { label: 'Apocalypse Now', year: 1979 },
-    { label: 'Alien', year: 1979 },
-    { label: 'Sunset Boulevard', year: 1950 },
-    {
-        label: 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-        year: 1964,
-    },
-    { label: 'The Great Dictator', year: 1940 },
-    { label: 'Cinema Paradiso', year: 1988 },
-    { label: 'The Lives of Others', year: 2006 },
-    { label: 'Grave of the Fireflies', year: 1988 },
-    { label: 'Paths of Glory', year: 1957 },
-    { label: 'Django Unchained', year: 2012 },
-    { label: 'The Shining', year: 1980 },
-    { label: 'WALL·E', year: 2008 },
-    { label: 'American Beauty', year: 1999 },
-    { label: 'The Dark Knight Rises', year: 2012 },
-    { label: 'Princess Mononoke', year: 1997 },
-    { label: 'Aliens', year: 1986 },
-    { label: 'Oldboy', year: 2003 },
-    { label: 'Once Upon a Time in America', year: 1984 },
-    { label: 'Witness for the Prosecution', year: 1957 },
-    { label: 'Das Boot', year: 1981 },
-    { label: 'Citizen Kane', year: 1941 },
-    { label: 'North by Northwest', year: 1959 },
-    { label: 'Vertigo', year: 1958 },
-    {
-        label: 'Star Wars: Episode VI - Return of the Jedi',
-        year: 1983,
-    },
-    { label: 'Reservoir Dogs', year: 1992 },
-    { label: 'Braveheart', year: 1995 },
-    { label: 'M', year: 1931 },
-    { label: 'Requiem for a Dream', year: 2000 },
-    { label: 'Amélie', year: 2001 },
-    { label: 'A Clockwork Orange', year: 1971 },
-    { label: 'Like Stars on Earth', year: 2007 },
-    { label: 'Taxi Driver', year: 1976 },
-    { label: 'Lawrence of Arabia', year: 1962 },
-    { label: 'Double Indemnity', year: 1944 },
-    {
-        label: 'Eternal Sunshine of the Spotless Mind',
-        year: 2004,
-    },
-    { label: 'Amadeus', year: 1984 },
-    { label: 'To Kill a Mockingbird', year: 1962 },
-    { label: 'Toy Story 3', year: 2010 },
-    { label: 'Logan', year: 2017 },
-    { label: 'Full Metal Jacket', year: 1987 },
-    { label: 'Dangal', year: 2016 },
-    { label: 'The Sting', year: 1973 },
-    { label: '2001: A Space Odyssey', year: 1968 },
-    { label: "Singin' in the Rain", year: 1952 },
-    { label: 'Toy Story', year: 1995 },
-    { label: 'Bicycle Thieves', year: 1948 },
-    { label: 'The Kid', year: 1921 },
-    { label: 'Inglourious Basterds', year: 2009 },
-    { label: 'Snatch', year: 2000 },
-    { label: '3 Idiots', year: 2009 },
-    { label: 'Monty Python and the Holy Grail', year: 1975 },
-];
-
-export default Registrar;
+export default ModalAtualizar;

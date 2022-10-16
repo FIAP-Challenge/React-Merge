@@ -1,18 +1,13 @@
-
-.stepper{
+.stepper {
     max-width: 1000px;
     margin: auto;
 }
-
 
 .containerRegistrarMaster {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
-   
-  
 }
 
 .Logo-div {
@@ -21,7 +16,7 @@
     display: flex;
     justify-content: center;
 }
-.containerRegistrar{
+.containerRegistrar {
     border: 1px solid #0a54e3;
     background-color: #1b1f25;
     display: flex;
@@ -29,20 +24,18 @@
     flex-direction: column;
     width: 90%;
     max-width: 700px;
-
 }
 
-.formsInputs{
+.formsInputs {
     display: flex;
     flex-direction: column;
 }
 
-.labelRegistrar{
-    font-family: 'Manjari', sans-serif;
+.labelRegistrar {
+    font-family: "Manjari", sans-serif;
     margin: 10px;
     color: rgba(255, 255, 255, 1);
 }
-
 
 .inputRegistrar {
     cursor: url(http://www.rw-designer.com/cursor-extern.php?id=89785), text;
@@ -53,44 +46,73 @@
     background: linear-gradient(0deg, rgba(217, 217, 217, 0.29), rgba(217, 217, 217, 0.29)), rgba(217, 217, 217, 0.29);
     border: 1px solid rgba(255, 255, 255, 0.74);
     box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    border-radius: 10px;
+    border-radius: 5px;
     color: rgba(255, 255, 255, 0.863);
     font-size: 17px;
     line-height: 39px;
     letter-spacing: -0.05em;
 }
 
-.cepSearch{
+.cepSearch {
     color: #1366b4;
     cursor: pointer;
     margin-bottom: 10px;
 }
 
-.cepSearch:hover{
-   color: rgb(0, 67, 250);
+.cepSearch:hover {
+    color: rgb(0, 67, 250);
 }
+
+.MuiAutocomplete-root {
+    cursor: url(http://www.rw-designer.com/cursor-extern.php?id=89785), text;
+    margin-bottom: 10px;
+
+    background: linear-gradient(0deg, rgba(217, 217, 217, 0.29), rgba(217, 217, 217, 0.29)), rgba(217, 217, 217, 0.29);
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.863);
+    font-size: 17px;
+    line-height: 39px;
+    letter-spacing: -0.05em;
+}
+.Mui-focused {
+    color: rgba(41, 40, 40, 0.863);
+}
+.MuiAutocomplete-root  .MuiAutocomplete-input {
+    padding: 6.5px 4px 7.5px 6px;
+   
+}
+
+.MuiAutocomplete-root label {
+    top: 9px;
+    color: rgba(255, 255, 255, 0.863);
+}
+
+.MuiAutocomplete-root fieldset{
+    border-color: #1b1f25;
+}
+
 
 select:disabled,
 select:hover,
 select:focus,
 select:active,
 select:focus {
-  background-color: #7a7c7f;
-  transition:0s;
+    background-color: #7a7c7f;
+    transition: 0s;
 }
 
-
-.inputRegistrar:disabled{
+.inputRegistrar:disabled {
     background-color: #202020f1;
 }
 
-.inputRegistrar::placeholder{
+.inputRegistrar::placeholder {
     color: #c5c5c5;
 }
 
-.inputRegistrar[type=number]::-webkit-inner-spin-button { 
+.inputRegistrar[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    
 }
 
 .buttonLoginContainer {
@@ -99,12 +121,11 @@ select:focus {
     justify-content: center;
 }
 
-
-.endereco_line1{
+.endereco_line1 {
     display: flex;
 }
 
-.divDisplayCEP{
+.divDisplayCEP {
     display: flex;
     justify-content: flex-end;
 }
@@ -117,73 +138,63 @@ select:focus {
     font-size: 0.9rem;
 }
 
-.buscarCEP:hover{
-
+.buscarCEP:hover {
     color: #0062be;
     cursor: pointer;
-
 }
 
-
-.logradouro{
+.logradouro {
     width: 70%;
     margin-right: 5%;
 }
 
-.numero-logradouro{
-    width: 30% ;
+.numero-logradouro {
+    width: 30%;
 }
 
-.complemento{
+.complemento {
     width: 60%;
     margin-right: 5%;
 }
 
-.cidade{
+.cidade {
     width: 40%;
 }
 
-
-.estado{
+.estado {
     width: 70%;
     margin-right: 5%;
 }
 
-.uf{
+.uf {
     width: 30%;
 }
 
-
-    
 .errosInputs {
     color: #eb5353;
     transition: all 150ms ease-in;
 }
 
-.containerButton{
+.containerButton {
     display: flex;
     justify-content: center;
 }
 
-
-.titulos-curriculo{
-    font-family: 'Manjari', sans-serif;
+.titulos-curriculo {
+    font-family: "Manjari", sans-serif;
     font-size: 1.2rem;
     margin: 15px 0px;
     color: rgba(255, 255, 255, 1);
 }
 
-.p-curriculos{
-    font-family: 'Manjari', sans-serif;
+.p-curriculos {
+    font-family: "Manjari", sans-serif;
     font-size: 0.9rem;
     margin: 15px 0px;
     color: rgba(255, 255, 255, 1);
 }
 
-
 .button-add {
-
-
     margin: 10px;
     background: #cdcccc30;
     padding: 10px;
@@ -198,8 +209,6 @@ select:focus {
     background: #cdcccc30;
 }
 
-
-
 hr.style-two {
     margin: 27px 0px;
     border: 0;
@@ -207,11 +216,9 @@ hr.style-two {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #0a54e3b5, rgba(0, 0, 0, 0));
 }
 
-.button-add:hover{
+.button-add:hover {
     background-color: #7a7a7a9f;
     transform: scale(1.05);
-  
-
 }
 
 .displayButton {
@@ -232,19 +239,16 @@ hr.style-two {
     -o-transition: background-color 2s ease-out;
     transition: background-color 2s ease-out;
     transition: transform 150ms ease-in-out;
-    
-    
 }
 
-.iconTrash{
+.iconTrash {
     font-size: 17px;
 }
 
-
-
-.button-remove:hover{
+.button-remove:hover {
     background-color: #7a7a7a9f;
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .containerInputs {
@@ -253,32 +257,28 @@ hr.style-two {
     padding: 10px;
 }
 
-
-
-.buttonNext{
+.buttonNext {
     margin-top: 25px;
     padding: 15px 50px;
     background: linear-gradient(0deg, rgba(0, 133, 255, 0.93), rgba(0, 133, 255, 0.93)), rgba(217, 217, 217, 0.29);
     border: 1px solid #ffffff;
     border-radius: 10px;
     color: #fff;
-    font-family: 'Manjari', sans-serif;
+    font-family: "Manjari", sans-serif;
     font-size: 1rem;
     transition: all 150ms ease-in;
 }
 
-.buttonNext:hover{
+.buttonNext:hover {
     transform: scale(1.05);
     background: #1366b4;
 }
 
-
-.info{
+.info {
     display: flex;
     justify-content: flex-end;
     margin: 0px 10px;
 }
-
 
 .fade-in-image {
     animation: fadeIn 2s;
@@ -286,80 +286,116 @@ hr.style-two {
     -moz-animation: fadeIn 1s;
     -o-animation: fadeIn 1s;
     -ms-animation: fadeIn 1s;
-  }
-  
-  @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-moz-keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-o-keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
+}
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
-  .fade-out-image {
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-out-image {
     animation: fadeOut 2s;
     -webkit-animation: fadeIn 1s;
     -moz-animation: fadeIn 1s;
     -o-animation: fadeIn 1s;
     -ms-animation: fadeIn 1s;
-  }
-  
+}
 
-    
-  @keyframes fadeOut {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
-  }
-  
-  @-moz-keyframes fadeOut {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
-  }
-  
-  @-webkit-keyframes fadeOut {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
-  }
-  
-  @-o-keyframes fadeOut {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
-  }
-  
-  @-ms-keyframes fadeOut {
-    100% { opacity: 0; }
-    0% { opacity: 1; }
-  }
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
+}
 
-  @media screen and (max-width: 600px) {
+@-moz-keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeOut {
+    100% {
+        opacity: 0;
+    }
+    0% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 600px) {
     ::-webkit-scrollbar {
-       display: none;
-      }
-      .margin-number{
+        display: none;
+    }
+    .margin-number {
         margin-top: 12px;
         font-size: 14px;
-      }
+    }
 
-      .buttonNext {
+    .buttonNext {
         width: 100%;
         margin-top: 25px;
         padding: 15px 50px;
@@ -367,8 +403,8 @@ hr.style-two {
         border: 1px solid #ffffff;
         border-radius: 10px;
         color: #fff;
-        font-family: 'Manjari', sans-serif;
+        font-family: "Manjari", sans-serif;
         font-size: 1rem;
         transition: all 150ms ease-in;
     }
-  }
+}
