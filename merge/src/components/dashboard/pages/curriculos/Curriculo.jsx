@@ -46,15 +46,18 @@ const Curriculo = () => {
             setOpen(true)
             setSeverity("success")
             setMensagem("Atualizado com sucesso!")
+          
+            let candidatoStage = candidato;
+            candidatoStage.curriculo = request;
+            console.log(candidatoStage.curriculo )
+            setCandidato(candidatoStage)
+            localStorage.setItem("__SESSION__", JSON.stringify(candidato))
             setInterval(() => {
                 navigate("/dashboard/vagas")
+                window.location.reload(); 
             }, 2000);
 
-            let candidatoStage = candidato;
-
-            candidatoStage.curriculo = request;
-
-            setCandidato(candidatoStage)
+           
             return data;
         } catch (error) {
             setOpen(true)

@@ -35,11 +35,18 @@ const validationSchema = yup.object({
 
 const Login = () => {
     const navigate = useNavigate();
-    const { setAuth, setCandidato } = useContext(AuthContext)
+    const { setAuth, setCandidato, candidato } = useContext(AuthContext)
     const [open, setOpen] = useState(false);
     const [mensagem, setMensagem] = useState("");
     const [severity, setSeverity] = useState("");
 
+
+    if (verificarLocalStorageCandidato) {
+        setAuth(true)
+        setCandidato(verificarLocalStorageCandidato)
+
+        navigate("/dashboard/vagas")
+    }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -63,7 +70,7 @@ const Login = () => {
                 data: objeto
             });
             let data = res.data;
-            // alert("Sucesso!")
+       
             setCandidato({})
             if (res.data.tipoLogin) {
                 setCandidato(res.data)

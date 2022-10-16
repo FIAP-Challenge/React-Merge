@@ -12,6 +12,20 @@
     top: 21px;
 }
 
+.usuario-login-nome {
+    display: flex;
+    border-radius: 7px;
+    font-size: 15px;
+    position: absolute;
+    right: 62px;
+    align-items: center;
+    justify-content: center;
+    transition: all .1s ease-in-out;
+    top: 32px;
+    box-shadow: 1px 2px 11px #0000008f;
+    cursor: default;
+}
+
 .usuario-login > svg {
     fill: rgb(0 133 255 / 93%);
     

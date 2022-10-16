@@ -158,7 +158,7 @@ const HomeDisc = () => {
 
                         <div className="containerHomeDisc">
                             <div className="headerTitle">
-                                <h2 className="h2-header-resultado">Seu resultado disc!</h2>
+                                <h2 className="h2-header-resultado">Seu resultado disc</h2>
                                 <div className='info'>
                                     <ButtonInfos mensagem="Esse é seu resultado disc, como ele você conseguirá entender melhor o seu perfil comportamental" />
                                 </div>

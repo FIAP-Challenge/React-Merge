@@ -23,23 +23,36 @@ const style = {
 
 const ModalMenu = () => {
     const navigate = useNavigate();
-    const { setAuth } = useContext(AuthContext)
+    const { setAuth, candidato } = useContext(AuthContext)
     const [openModalAtt, setopenModalAtt] = useState(false)
     const [open, setOpen] = useState(false);
 
 
 
 
-    document.addEventListener('mouseup', function(e) {
-        var container = document.getElementById('container-menu');
-        if (!container.contains(e.target)) {
-            container.style.display = 'none';
-        }
-    });
+    if (open) {
+        document.addEventListener('mouseup', function (e) {
+            var container = document.getElementById('container-menu');
+            if (!container.contains(e.target)) {
+                container.style.display = 'none';
+            }
+        });
+    }
+
+
     return (
         <>
-            <div onClick={() => setOpen(!open)} className="usuario-login">
-                <BsIcon.BsPersonCircle />
+            <div onClick={() => setOpen(!open)} >
+
+                <div className="usuario-login-nome" >
+                    <span>{candidato.nome.split(" ")[0].toUpperCase()}</span>
+                    
+                </div>
+                <div className="usuario-login" >
+
+                    <BsIcon.BsPersonCircle />
+                </div>
+                
 
             </div>
 
@@ -54,17 +67,23 @@ const ModalMenu = () => {
 
                             }}>Meus dados</li>
                             <li onClick={() => {
-                                setAuth(false)
-                                localStorage.removeItem("__SESSION__")
-                            }}>Sair</li>
 
+                                localStorage.removeItem("__SESSION__")
+                                setInterval(() => {
+                                    setAuth(false)
+
+                                }, 1000);
+
+                                window.location.reload(); 
+
+                            }}>Sair</li>
                         </ul>
                     </nav>
                 </div>
             ) : ""
             }
 
-            {openModalAtt ? (<ModalAtualizar/>) : ""}
+            {openModalAtt ? (<ModalAtualizar />) : ""}
         </>
     )
 }

@@ -29,7 +29,7 @@ const ModalAtualizar = () => {
     const [unificado, setUnificados] = useState({})
     const [cep, setCep] = useState();
     const [goSteps, setGoSteps] = useState(0);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [mensagem, setMensagem] = useState("");
     const [severity, setSeverity] = useState("");
     Modal.setAppElement('#root');
@@ -45,6 +45,7 @@ const ModalAtualizar = () => {
 
     const handleSubmitUpdate = async (valordados1) => {
         let objeto = {}
+        objeto['codigo'] = candidato.codigo
         objeto['nome'] = valordados1.nome
         objeto['cpf'] = valordados1.cpf.replace(/[\[\].!'@,><|://\\;&* ()_+=-]/g, "")
         objeto['dtNascimento'] = new Date(valordados1.dataNascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
@@ -67,6 +68,10 @@ const ModalAtualizar = () => {
             'siglaEstado': valordados1.siglaEstado,
             'numeroLogradouro': valordados1.numeroLogradouro
         }
+        objeto['curriculo'] = candidato.curriculo
+        objeto['disc'] = candidato.disc
+        objeto['statusLogin'] = candidato.statusLogin
+        objeto['tipoLogin'] = candidato.tipoLogin
         try {
             let res = await axios({
                 method: 'put',
@@ -76,15 +81,22 @@ const ModalAtualizar = () => {
             let data = res.data;
             setOpen(true)
             setSeverity("success")
-            setMensagem("Atualizado com sucesso")
-            closeModal()
+            setMensagem("Atualizado com sucesso")            
+            
+            localStorage.clear("__SESSION__")
+            localStorage.setItem("__SESSION__", JSON.stringify(objeto))
+
+
+            setInterval(() => {
+                navigate("/dashboard/vagas")
+                window.location.reload(); 
+            }, 2000);
 
             return data;
         } catch (error) {
             setOpen(true)
             setSeverity("error")
             setMensagem("Falha na atualização")
-
             return error.response;
         }
 
