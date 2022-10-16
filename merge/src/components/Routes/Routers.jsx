@@ -41,9 +41,9 @@ const Routers = () => {
         <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard/> <Disc/></ProtectedRoute>} />
         <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard/><Curriculo /></ProtectedRoute>} />
         <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard/><Vagas /></ProtectedRoute>} />
-        <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={auth}><Dashboard/><Entrevistas /></ProtectedRoute>} />
-        <Route path="/dashboard/informacoes" element={<ProtectedRoute user={auth}><Dashboard/><Informacoes /></ProtectedRoute>} />
-        <Route path="/dashboard/suporte" element={<ProtectedRoute user={auth}><Dashboard/><Suporte/></ProtectedRoute>} />
+        {/* <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={auth}><Dashboard/><Entrevistas /></ProtectedRoute>} /> */}
+        {/* <Route path="/dashboard/informacoes" element={<ProtectedRoute user={auth}><Dashboard/><Informacoes /></ProtectedRoute>} /> */}
+        {/* <Route path="/dashboard/suporte" element={<ProtectedRoute user={auth}><Dashboard/><Suporte/></ProtectedRoute>} /> */}
         <Route path="/*" element={<PaginaNaoLocalizada/>} />
        
       </Routes>

@@ -35,11 +35,11 @@ export const SidebarDate = [
     //     icon: <AiIcons.AiFillHome/>,
     //     cName: 'nav-text'
     // },
-    {
-        title: 'Suporte',
-        path: "/dashboard/suporte",
-        icon: <IoIcons.IoMdHelpCircle/>,
-        cName: 'nav-text'
-    },
+    // {
+    //     title: 'Suporte',
+    //     path: "/dashboard/suporte",
+    //     icon: <IoIcons.IoMdHelpCircle/>,
+    //     cName: 'nav-text'
+    // },
 
 ]

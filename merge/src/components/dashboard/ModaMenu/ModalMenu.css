@@ -10,6 +10,7 @@
     justify-content: center;
     transition: all .1s ease-in-out;
     top: 21px;
+
 }
 
 .usuario-login-nome {
@@ -22,7 +23,6 @@
     justify-content: center;
     transition: all .1s ease-in-out;
     top: 32px;
-    box-shadow: 1px 2px 11px #0000008f;
     cursor: default;
 }
 
