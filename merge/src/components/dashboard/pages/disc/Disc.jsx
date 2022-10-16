@@ -8,14 +8,42 @@ import { DiscData } from "./DiscData";
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from './../../../../AuthContext'
+import axios from 'axios';
+import { checkDisc } from "../../../../function/functionDisc";
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
+
+   
 
 
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Disc = () => {
+    const navigate = useNavigate();
+    const { candidato, setCandidato } = useContext(AuthContext)
     const theme = useTheme();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
     const maxSteps = DiscData.length;
+    const [open, setOpen] = useState(true);
+    const [mensagem, setMensagem] = useState("");
+    const [severity, setSeverity] = useState("");
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -23,6 +51,42 @@ const Disc = () => {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+
+
+    const handleUpdateDisc = async (discRep) => {
+        let objeto = checkDisc(DiscData, discRep)
+        let request = {
+            "dominante": objeto[0],
+            "estavel": objeto[1],
+            "influente": objeto[2],
+            "condescendente": objeto[3]
+        }
+        try {
+            let res = await axios({
+                method: 'put',
+                url: `http://localhost:8080/Merge/rest/disc/${candidato.codigo}`,
+                data: request
+            });
+            let data = res.data;
+            setOpen(true)
+            setSeverity("success")
+            setMensagem("Enviado com sucesso!")
+            let candidatoStage = candidato;
+            candidatoStage.disc = request;
+            setCandidato(candidatoStage)
+            setInterval(() => {
+                navigate("/dashboard/vagas")
+            }, 2000);
+            return data;
+        } catch (error) {
+            setOpen(true)
+            setSeverity("error")
+            setMensagem("Falha no envio")
+
+            return error.response;
+        }
+    }
 
     const validationSchema = yup.object({
         perguntas: yup.array().of(
@@ -61,6 +125,13 @@ const Disc = () => {
     return (
         <div className="containerDiscMaster">
 
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {mensagem}
+                    </Alert>
+                </Snackbar>
+            </Stack>
             <div className="containerDisc">
                 <Formik
                     initialValues={{
@@ -77,7 +148,12 @@ const Disc = () => {
                     }}
                     onSubmit={async (values) => {
                         await new Promise((r) => setTimeout(r, 500));
-                        alert(JSON.stringify(values, null, 2));
+
+                        handleUpdateDisc(values)
+
+
+
+
                     }}
                     validationSchema={validationSchema}
                 >
@@ -98,21 +174,22 @@ const Disc = () => {
                                             values.perguntas.map((perguntas, index) => (
 
                                                 <div key={index}>
-                                                    {index == activeStep ? <div key={index} name={`objeto.${index}`}>
+                                                    {index === activeStep ? <div key={index} name={`objeto.${index}`}>
                                                         <div className="discHeader">
                                                             <h2>{DiscData[index].pergunta}</h2>
                                                         </div>
                                                         <div className="discBody" >
+
                                                             <div className="discRespostas" >
                                                                 <div className="separator">
                                                                     <div>
-                                                                        <Field 
-                                                                         name={`perguntas.${index}.respostaA`} 
-                                                                         className="selectFieldDisc" 
-                                                                         as="select" 
-                                                                         id="respostaA"
-                                                                
-                                                                         >
+                                                                        <Field
+                                                                            name={`perguntas.${index}.respostaA`}
+                                                                            className="selectFieldDisc"
+                                                                            as="select"
+                                                                            id="respostaA"
+
+                                                                        >
                                                                             <option value="" defaultValue></option>
                                                                             <option value="1">1</option>
                                                                             <option value="2">2</option>
@@ -204,12 +281,12 @@ const Disc = () => {
                                                     activeStep={activeStep}
                                                     nextButton={
                                                         <Button
-                                                       
+
                                                             className="buttonAvançar"
                                                             size="small"
                                                             // type="submit"
                                                             onClick={() => {
-                                                               
+
                                                                 push({
                                                                     pergunta: (activeStep + 2),
                                                                     respostaA: '',

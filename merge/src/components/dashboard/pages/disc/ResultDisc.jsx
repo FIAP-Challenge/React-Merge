@@ -2,18 +2,21 @@ import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css'
 import './resultDisc.css'
 
-const ResultDisc = () => {
+const ResultDisc = (props) => {
+
+
+ 
 
     const data = [
         {
           data: {
-            Dominante: 0.90,
-            Influente: 0.45,
-            Estável: 0.65,
-            Condescendente: 0.26,
+            Dominante: props.disc.dominante,
+            Influente: props.disc.influente,
+            Estável: props.disc.estavel,
+            Condescendente: props.disc.condescendente,
             
           },
-          meta: { color: 'red' }
+          meta: { color: 'blue' }
         },
       ];
   

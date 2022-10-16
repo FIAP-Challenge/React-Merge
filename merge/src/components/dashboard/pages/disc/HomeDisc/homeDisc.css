@@ -18,6 +18,17 @@
     max-width: 700px;
 }
 
+.h2-header-resultado{
+    text-align: center;
+}
+
+.align-items-disc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .informativo{
     margin: 15px 0px;
 }

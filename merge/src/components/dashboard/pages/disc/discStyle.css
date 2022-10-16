@@ -114,3 +114,33 @@ img.imgErrado {
     
 }
 
+.MuiTabs-vertical{
+    background: #393c40;;
+}
+
+.MuiBox-root{
+    background: #393c40;
+    color: white;
+}
+
+.MuiBox-root p, h2, h3, ul  {
+    color: white;
+    margin: 10px 0px;
+}
+
+.MuiBox-root ul{
+    margin-left: 10px;
+}
+
+.MuiButtonBase-root {
+    color: white;
+}
+
+
+@media screen and (max-width: 800px){
+
+    .MuiButtonBase-root {
+        width: 10px;;
+    }
+ 
+}

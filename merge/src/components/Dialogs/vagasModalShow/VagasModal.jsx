@@ -60,9 +60,6 @@ const VagasModal = (props) => {
                 setCandidatura(true)
             })
     }
-    console.log(candidato)
-    console.log(props)
-    console.log(candidatura)
 
 
     const openModal = () => {
@@ -71,7 +68,6 @@ const VagasModal = (props) => {
         setIsOpen(true);
     }
 
-    console.log(props)
     const closeModal = () => {
         var div = document.querySelector('html');
         div.style.overflow = 'auto'

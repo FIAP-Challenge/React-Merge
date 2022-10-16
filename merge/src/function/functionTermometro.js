@@ -56,7 +56,6 @@ export const termometro = (requisitos, requisitoDisc = {}, curriculo, boolean) =
         let totalRequisitos = requisitoDisc.legth + requisitosArray.length
 
         const perc = Math.round((totalComtemplasCurriculo / totalRequisitos) * 100);
-        console.log(perc)
         return perc;
     }
     let countComtempla = 0;
