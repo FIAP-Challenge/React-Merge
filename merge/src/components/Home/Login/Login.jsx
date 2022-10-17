@@ -19,7 +19,7 @@ import MuiAlert from '@mui/material/Alert';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-const verificarLocalStorageCandidato = JSON.parse(localStorage.getItem("__SESSION__"))
+const verificarLocalStorage = JSON.parse(localStorage.getItem("__SESSION__"))
 
 
 const validationSchema = yup.object({
@@ -35,18 +35,33 @@ const validationSchema = yup.object({
 
 const Login = () => {
     const navigate = useNavigate();
-    const { setAuth, setCandidato, candidato } = useContext(AuthContext)
+    const { setAuth, setCandidato, setEmpresa, empresa, isEmpresa, setIsEmpresa } = useContext(AuthContext)
     const [open, setOpen] = useState(false);
     const [mensagem, setMensagem] = useState("");
     const [severity, setSeverity] = useState("");
 
 
-    if (verificarLocalStorageCandidato) {
-        setAuth(true)
-        setCandidato(verificarLocalStorageCandidato)
+    if (verificarLocalStorage) {
 
-        navigate("/dashboard/vagas")
+        if (verificarLocalStorage.tipoLogin == "C") {
+
+            setAuth(true)
+            setCandidato(verificarLocalStorage)
+
+            navigate("/dashboard/vagas")
+        }
+
+        if (verificarLocalStorage.tipoLogin == "E") {
+
+            setIsEmpresa(true)
+            setAuth(true)
+            setEmpresa(verificarLocalStorage)
+            navigate("/business/candidaturas")
+        }
+
     }
+
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -70,18 +85,31 @@ const Login = () => {
                 data: objeto
             });
             let data = res.data;
-       
-            setCandidato({})
-            if (res.data.tipoLogin) {
-                setCandidato(res.data)
+            console.log(res.data)
 
+            if (res.data.tipoLogin == "C") {
+                setCandidato({})
+                setCandidato(res.data)
                 setAuth(true)
                 localStorage.setItem('__SESSION__', JSON.stringify(res.data));
                 navigate("/dashboard/vagas")
-
-
-            } else {
             }
+
+            if (res.data.tipoLogin == "E") {
+
+                setEmpresa({})
+                setIsEmpresa(true)
+                setEmpresa(res.data)
+                console.log(empresa)
+                setAuth(true)
+                localStorage.setItem('__SESSION__', JSON.stringify(res.data));
+
+                navigate("/business/candidaturas") 
+
+
+            }
+
+
             return data;
         } catch (error) {
             setOpen(true)
@@ -153,9 +181,6 @@ const Login = () => {
                                             </div>
                                         </Link>
                                     </div> */}
-
-
-
                                 </Form>
                             </div>
                         )}

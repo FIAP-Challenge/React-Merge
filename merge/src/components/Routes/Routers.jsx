@@ -4,18 +4,16 @@ import Login from '../Home/Login/Login'
 import Registrar from '../Home/Registrar/Registrar'
 import EsqueciSenha from '../Home/Login/esqueciSenha/EsqueciSenha'
 import Dashboard from '../dashboard/Dashboard'
-import Footer from '../Home/Footer/Footer'
-import Menu from '../Home/Menu/Menu'
 import Vagas from '../dashboard/pages/vagas/Vagas'
 import Curriculo from '../dashboard/pages/curriculos/Curriculo'
-import Entrevistas from '../dashboard/pages/entrevistas/Entrevistas'
-import Informacoes from '../dashboard/pages/informacoes/Informacoes'
-import Suporte from '../dashboard/pages/suporte/Suporte'
 import PaginaNaoLocalizada from '../paginaNaoLocalizado/PaginaNaoLocalizada'
 import Disc from '../dashboard/pages/disc/Disc'
 import HomeDisc from '../dashboard/pages/disc/HomeDisc/HomeDisc'
 import React, { useContext } from "react"
+import DashboardBusiness from '../dashboardBusiness/DashboardBusiness'
 import { AuthContext } from '../../AuthContext'
+import Candidaturas from './../dashboardBusiness/pages/candidaturas/Candidaturas'
+import CadastrarVagas from '../dashboardBusiness/pages/cadastrarVagas/CadastraVagas'
 
 const ProtectedRoute = ({ user, children }) => {
 
@@ -26,8 +24,17 @@ const ProtectedRoute = ({ user, children }) => {
   return children;
 };
 
+
+const ProtectedBusiness = ({ user, business, children }) => {
+
+  if (!user && !business) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
+
 const Routers = () => {
-  const { auth } = useContext(AuthContext)
+  const { auth, isEmpresa } = useContext(AuthContext)
 
   return (
 
@@ -37,15 +44,15 @@ const Routers = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/registrar' element={<Registrar />} />
         <Route path='/esqueciSenha' element={<EsqueciSenha />} />
-        <Route path="/dashboard/disc" element={<ProtectedRoute user={auth}> <Dashboard/> <HomeDisc/></ProtectedRoute>} />
-        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard/> <Disc/></ProtectedRoute>} />
-        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard/><Curriculo /></ProtectedRoute>} />
-        <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard/><Vagas /></ProtectedRoute>} />
-        {/* <Route path="/dashboard/entrevistas" element={<ProtectedRoute user={auth}><Dashboard/><Entrevistas /></ProtectedRoute>} /> */}
-        {/* <Route path="/dashboard/informacoes" element={<ProtectedRoute user={auth}><Dashboard/><Informacoes /></ProtectedRoute>} /> */}
-        {/* <Route path="/dashboard/suporte" element={<ProtectedRoute user={auth}><Dashboard/><Suporte/></ProtectedRoute>} /> */}
-        <Route path="/*" element={<PaginaNaoLocalizada/>} />
-       
+        <Route path="/*" element={<PaginaNaoLocalizada />} />
+
+        <Route path="/dashboard/disc" element={<ProtectedRoute user={auth}> <Dashboard /> <HomeDisc /></ProtectedRoute>} />
+        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard /> <Disc /></ProtectedRoute>} />
+        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard /><Curriculo /></ProtectedRoute>} />
+        <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard /><Vagas /></ProtectedRoute>} />
+
+        <Route path="/business/candidaturas" element={<ProtectedRoute user={isEmpresa}> <DashboardBusiness /> <Candidaturas /></ProtectedRoute>} />
+        <Route path="/business/cadastrar" element={<ProtectedBusiness user={isEmpresa}>  <DashboardBusiness /> <CadastrarVagas /></ProtectedBusiness>} />
       </Routes>
     </>
 
