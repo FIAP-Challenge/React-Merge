@@ -14,6 +14,7 @@ import DashboardBusiness from '../dashboardBusiness/DashboardBusiness'
 import { AuthContext } from '../../AuthContext'
 import Candidaturas from './../dashboardBusiness/pages/candidaturas/Candidaturas'
 import CadastrarVagas from '../dashboardBusiness/pages/cadastrarVagas/CadastraVagas'
+import Footer from '../Home/Footer/Footer'
 
 const ProtectedRoute = ({ user, children }) => {
 
@@ -46,13 +47,13 @@ const Routers = () => {
         <Route path='/esqueciSenha' element={<EsqueciSenha />} />
         <Route path="/*" element={<PaginaNaoLocalizada />} />
 
-        <Route path="/dashboard/disc" element={<ProtectedRoute user={auth}> <Dashboard /> <HomeDisc /></ProtectedRoute>} />
-        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard /> <Disc /></ProtectedRoute>} />
-        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard /><Curriculo /></ProtectedRoute>} />
-        <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard /><Vagas /></ProtectedRoute>} />
+        <Route path="/dashboard/disc" element={<ProtectedRoute user={auth}> <Dashboard /> <HomeDisc /> <Footer/></ProtectedRoute>} />
+        <Route path="/dashboard/disc/perguntas" element={<ProtectedRoute user={auth}> <Dashboard /> <Disc /><Footer/></ProtectedRoute>} />
+        <Route path="/dashboard/curriculo" element={<ProtectedRoute user={auth}><Dashboard /><Curriculo /><Footer/></ProtectedRoute>} />
+        <Route path="/dashboard/vagas" element={<ProtectedRoute user={auth}><Dashboard /><Vagas /><Footer/></ProtectedRoute>} />
 
-        <Route path="/business/candidaturas" element={<ProtectedRoute user={isEmpresa}> <DashboardBusiness /> <Candidaturas /></ProtectedRoute>} />
-        <Route path="/business/cadastrar" element={<ProtectedBusiness user={isEmpresa}>  <DashboardBusiness /> <CadastrarVagas /></ProtectedBusiness>} />
+        <Route path="/business/candidaturas" element={<ProtectedRoute user={isEmpresa}> <DashboardBusiness /> <Candidaturas /><Footer/></ProtectedRoute>} />
+        <Route path="/business/cadastrar" element={<ProtectedBusiness user={isEmpresa}>  <DashboardBusiness /> <CadastrarVagas /><Footer/></ProtectedBusiness>} />
       </Routes>
     </>
 

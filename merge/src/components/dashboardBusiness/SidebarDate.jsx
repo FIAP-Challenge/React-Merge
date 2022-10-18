@@ -6,7 +6,7 @@ import * as IoIcons from "react-icons/io"
 
 export const SidebarDate = [
     {
-        title: 'Candidaturas',
+        title: 'Gestão vagas',
         path: "/business/candidaturas",
         icon: <FaIcons.FaEnvelopeOpenText/>,
         cName: 'nav-text'

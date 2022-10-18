@@ -1,0 +1,39 @@
+.painel-candidaturas {
+    background-color: #1b1f25;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #0a54e3;
+}
+
+.count-infos {
+    display: flex;
+    /* max-width: 190px; */
+    width: 25%;
+    background: #3d3d3d;
+    padding: 20px;
+    height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 23px;
+    flex-direction: column;
+    border: 1px solid #a1a1a1;
+}
+
+.space-content{
+    height: 5%;
+}
+
+.painel-vagas-pubs{
+    padding: 10px;
+    background-color: #1b1f25;
+    width: 340px;
+}
+
+.edit-vaga {
+    display: flex;
+    justify-content: space-between;
+}
