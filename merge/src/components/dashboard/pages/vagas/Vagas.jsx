@@ -4,7 +4,6 @@ import axios from "axios";
 import VagasModal from "../../../Dialogs/vagasModalShow/VagasModal";
 import ModalAtualizar from './../../ModalAtualizarRegistro/ModalAtualizar'
 import apiService from "../../../../Services/api/apiService";
-import Masonry from 'react-masonry-component';
 
 const masonryOptions = {
     transitionDuration: 3

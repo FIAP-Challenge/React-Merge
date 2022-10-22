@@ -1,7 +1,7 @@
 import axios from "axios";
 
      const apiService = axios.create({
-      baseURL: "http://localhost:8080/Merge/rest",
+      baseURL: "https://app-merge.herokuapp.com/rest",
     });
       
     

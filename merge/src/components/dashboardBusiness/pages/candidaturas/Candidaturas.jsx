@@ -3,7 +3,6 @@ import './candidaturasStyles.css'
 import './../stylesPages.css'
 import * as HiIcon from "react-icons/hi"
 import { AuthContext } from './../../../../AuthContext'
-import Masonry from 'react-masonry-component';
 import CandidaturasModal from "./candidaturasModal/CandidaturasModal"
 import apiService from './../../../../Services/api/apiService'
 
