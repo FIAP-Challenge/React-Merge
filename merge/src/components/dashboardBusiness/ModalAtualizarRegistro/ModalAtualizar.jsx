@@ -11,12 +11,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
-import axios from 'axios';
 import { Stepper, Step } from 'react-form-stepper';
 import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos';
 import { BiTrash, } from 'react-icons/bi'
 import api from '../../../Services/api/api';
+import apiService from '../../../Services/api/apiService';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -69,9 +68,9 @@ const ModalAtualizar = () => {
         }
         objeto['tipoLogin'] = "E"
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'put',
-                url: `http://localhost:8080/Merge/rest/empresa/${empresa.codigo}`,
+                url: `/empresa/${empresa.codigo}`,
                 data: objeto
             });
             let data = res.data;

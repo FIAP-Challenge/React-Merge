@@ -14,12 +14,12 @@ import ReactStoreIndicator from 'react-score-indicator'
 import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos'
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthContext";
-import axios from 'axios';
 import { termometro } from '../../../function/functionTermometro';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import apiService from '../../../Services/api/apiService';
 
 
 
@@ -41,15 +41,15 @@ const VagasModal = (props) => {
 
 
     useEffect(() => {
-       
+
 
         carregaDados()
 
     }, [])
 
     const carregaDados = async () => {
-        axios
-            .get(`http://localhost:8080/Merge/rest/candidatura/vaga=${props.vaga.codigo}&candidato=${candidato.codigo}`)
+        apiService
+            .get(`/vaga=${props.vaga.codigo}&candidato=${candidato.codigo}`)
             .then(response => {
                 return response.status
             })
@@ -89,11 +89,11 @@ const VagasModal = (props) => {
         objeto['codigoCandidato'] = candidato.codigo;
         objeto['codigoVaga'] = props.vaga.codigo
         objeto['score'] = termometro(props.vaga.requisitos, {}, candidato, false)
-    
+
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'post',
-                url: 'http://localhost:8080/Merge/rest/candidatura',
+                url: '/candidatura',
                 data: objeto
             });
             let data = res.data;
@@ -207,6 +207,9 @@ const VagasModal = (props) => {
                         <div>
                             <p>{props.vaga.descricaoVaga}</p>
                         </div>
+                        <div className='inscricoes-date'>
+                            <span>Inscrições até: {new Date(props.vaga.dataFim).toLocaleDateString()}</span>
+                        </div>
 
                     </div>
 
@@ -273,34 +276,23 @@ const VagasModal = (props) => {
                     </div>
 
                     <div className="containerButtonVisualizar buttonBottom">
+
                         {candidatura ? (
                             <button onClick={() => {
-                                try{
+                                try {
                                     setCandidatura(false)
                                     handleCandidatura()
-                                }catch(err){
+                                } catch (err) {
 
                                 }
-                              
+
                             }} className='btn-vagas' type="submit">Increva-se</button>
-                        ):
+                        ) :
                             <button disabled className='btn-vagas-realizada'>Candidatura realizada!</button>
                         }
-                        
+
                     </div>
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
             </Modal>
         </div>
     )

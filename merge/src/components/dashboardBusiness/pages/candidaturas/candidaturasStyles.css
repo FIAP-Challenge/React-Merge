@@ -2,6 +2,7 @@
     background-color: #1b1f25;
     height: 100px;
     width: 100%;
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -12,7 +13,7 @@
 .count-infos {
     display: flex;
     /* max-width: 190px; */
-    width: 25%;
+    width: 45%;
     background: #3d3d3d;
     padding: 20px;
     height: 80px;
@@ -23,17 +24,71 @@
     border: 1px solid #a1a1a1;
 }
 
-.space-content{
+span.count-span {
+    margin-top: 8px;
+    color: rgb(0 133 255 / 93%);
+    font-size: 20px;
+}
+
+.space-content {
     height: 5%;
 }
 
-.painel-vagas-pubs{
-    padding: 10px;
-    background-color: #1b1f25;
-    width: 340px;
+.align-vagas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.edit-vaga {
+.painel-vagas-pubs {
+    margin: 15px 15px;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #1b1f25;
+    width: 340px;
+    transition: all 0.1s ease-in-out;
+}
+
+.painel-vagas-pubs:hover {
+    background-color: #525252;
+    transform: scale(1.06);
+    cursor: pointer;
+}
+
+.header-vaga {
+    font-size: 20px;
+    color: #0581f3;
+    margin: 18px 0px;
+}
+
+span.vaga-describre {
+    margin: 10px 0px;
+    display: block;
+    color: #b6b6b6;
+}
+
+.footer-vaga {
+    margin-top: 10px;
     display: flex;
+    font-size: 14px;
+    color: #9b9b9b;
+    flex-direction: row;
+}
+
+
+.div-codigo {
+    display: flex;
+    /* position: absolute; */
+    /* right: 10px; */
     justify-content: space-between;
+}
+
+.span-days {
+    display: block;
+}
+
+.span-codigo {
+    display: block;
 }

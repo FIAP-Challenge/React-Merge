@@ -8,13 +8,13 @@ import ErroLogin from "../../Dialogs/erroLogin/ErroLogin";
 import * as AiIcons from "react-icons/ai"
 import { useState, useContext } from "react";
 import { AuthContext } from "../../../AuthContext";
-import axios from 'axios';
 import Menu from '../Menu/Menu'
 import Footer from '../Footer/Footer'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import apiService from "../../../Services/api/apiService";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -79,9 +79,9 @@ const Login = () => {
 
     async function handleLogin(objeto) {
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'post',
-                url: 'http://localhost:8080/Merge/rest/login',
+                url: '/login',
                 data: objeto
             });
             let data = res.data;

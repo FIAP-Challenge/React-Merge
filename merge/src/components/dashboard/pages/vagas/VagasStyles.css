@@ -6,19 +6,54 @@
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    
 }
 
 .containerVagas {
-    margin-top: 30px;
+    border-radius: 12px;
     border: 1px solid #0a54e3;
     background-color: #1b1f25;
     display: flex;
     padding: 20px;
     flex-direction: column;
     width: 90%;
-    max-width: 560px;
+    max-width: 431px;
     box-shadow: 1px 2px 11px #0000008f;
+    margin: 20px;
+    
+}
 
+
+.div-codigo {
+    display: flex;
+    /* position: absolute; */
+    /* right: 10px; */
+    justify-content: space-between;
+}
+
+
+
+.containerPage {
+    display: flex;
+    padding: 10px;
+    font-family: 'manjari', sans-serif;
+    height: 100vh;
+    flex-wrap: wrap;
+}
+
+h3.title-requisitos {
+    color: #1366b4;
+    font-family: 'Manjari';
+    font-size: 18px;
+}
+
+
+.vagas-requisitos {
+    margin-top: 20px;
+}
+
+.separator-vagas-modal {
+    margin-top: 20px;
 }
 
 .containerModal {

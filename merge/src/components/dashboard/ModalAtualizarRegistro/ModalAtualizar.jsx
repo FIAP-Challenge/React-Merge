@@ -17,6 +17,7 @@ import { Stepper, Step } from 'react-form-stepper';
 import ButtonInfos from './../../Templates/buttonInfos/ButtonInfos';
 import { BiTrash, } from 'react-icons/bi'
 import api from '../../../Services/api/api';
+import apiService from '../../../Services/api/apiService';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -73,9 +74,9 @@ const ModalAtualizar = () => {
         objeto['statusLogin'] = candidato.statusLogin
         objeto['tipoLogin'] = candidato.tipoLogin
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'put',
-                url: `http://localhost:8080/Merge/rest/candidato/${candidato.codigo}`,
+                url: `/candidato/${candidato.codigo}`,
                 data: objeto
             });
             let data = res.data;

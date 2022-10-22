@@ -4,7 +4,6 @@ import { Stepper, Step } from 'react-form-stepper';
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import InputMask from 'react-input-mask';
-import axios from 'axios';
 import * as yup from "yup";
 import ButtonInfos from '../../../Templates/buttonInfos/ButtonInfos';
 import { BiTrash, } from 'react-icons/bi'
@@ -13,6 +12,10 @@ import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate, Link } from "react-router-dom";
+import apiService from '../../../../Services/api/apiService';
+import { cursosForm } from './../../../../json/cursos'
+import { idiomasForm } from './../../../../json/Idiomas'
+import { formacoesForm } from './../../../../json/formacoes'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,29 +38,29 @@ const Curriculo = () => {
             "formacoes": curriculo.formacoes
 
         }
-    
+
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'put',
-                url: `http://localhost:8080/Merge/rest/curriculo/${candidato.codigo}`,
+                url: `/curriculo/${candidato.codigo}`,
                 data: request
             });
             let data = res.data;
             setOpen(true)
             setSeverity("success")
             setMensagem("Atualizado com sucesso!")
-          
+
             let candidatoStage = candidato;
             candidatoStage.curriculo = request;
-            console.log(candidatoStage.curriculo )
+            console.log(candidatoStage.curriculo)
             setCandidato(candidatoStage)
             localStorage.setItem("__SESSION__", JSON.stringify(candidato))
             setInterval(() => {
                 navigate("/dashboard/vagas")
-                window.location.reload(); 
+                window.location.reload();
             }, 2000);
 
-           
+
             return data;
         } catch (error) {
             setOpen(true)
@@ -105,7 +108,7 @@ const Curriculo = () => {
 
     return (
         <div className="containerPage">
-        
+
             <Stack spacing={2} sx={{ width: '100%' }}>
                 <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
                     <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
@@ -160,7 +163,11 @@ const Curriculo = () => {
                                                             </div>
                                                             <div className='formsInputs '>
                                                                 <label className='labelRegistrar' htmlFor={`idiomas.${index}.nome`} >Nome do idioma *</label>
-                                                                <Field id={`idiomas.${index}.nome`} className="inputRegistrar" type="text" name={`idiomas.${index}.nome`} placeholder="Nome do idioma" />
+                                                                <Field id={`idiomas.${index}.nome`} className="inputRegistrar" as="select" name={`idiomas.${index}.nome`}>
+                                                                    <option value="" disabled defaultValue>Selecione</option>
+                                                                    {idiomasForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                </Field>
                                                                 <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nome`} />
                                                             </div>
 
@@ -205,7 +212,11 @@ const Curriculo = () => {
                                                             </div>
                                                             <div className='formsInputs '>
                                                                 <label className='labelRegistrar' htmlFor={`formacoes.${index}.nome`}>Nome da formação *</label>
-                                                                <Field id={`formacoes.${index}.nome`} className="inputRegistrar" type="text" name={`formacoes.${index}.nome`} placeholder="Nome da formação" />
+                                                                <Field id={`formacoes.${index}.nome`} className="inputRegistrar" as="select" name={`formacoes.${index}.nome`}>
+                                                                    <option value="" disabled defaultValue>Selecione</option>
+                                                                    {formacoesForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                </Field>
                                                                 <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nome`} />
                                                             </div>
 
@@ -248,7 +259,11 @@ const Curriculo = () => {
                                                             </div>
                                                             <div className='formsInputs '>
                                                                 <label className='labelRegistrar' htmlFor={`cursos.${index}.nome`} >Nome do curso *</label>
-                                                                <Field id={`cursos.${index}.nome`} className="inputRegistrar" type="text" name={`cursos.${index}.nome`} placeholder="Nome do curso" />
+                                                                <Field id={`cursos.${index}.nome`} className="inputRegistrar" as="select" name={`cursos.${index}.nome`}>
+                                                                    <option value="" disabled defaultValue>Selecione</option>
+                                                                    {cursosForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                </Field>
                                                                 <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nome`} />
                                                             </div>
 

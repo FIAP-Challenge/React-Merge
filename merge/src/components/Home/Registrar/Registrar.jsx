@@ -9,9 +9,11 @@ import InputMask from 'react-input-mask';
 import api from '../../../Services/api/api';
 import { BiTrash, } from 'react-icons/bi'
 import ButtonInfos from '../../Templates/buttonInfos/ButtonInfos';
-import axios from 'axios';
 import SucessRegister from './ModalRegister/SucessRegister';
-
+import apiService from '../../../Services/api/apiService';
+import { idiomasForm } from './../../../json/Idiomas'
+import { cursosForm } from './../../../json/cursos'
+import { formacoesForm } from './../../../json/formacoes'
 
 const Registrar = () => {
     const navigate = useNavigate();
@@ -65,11 +67,11 @@ const Registrar = () => {
             formacoes: valordados2.formacoes,
             idiomas: valordados2.idiomas
         }
-      
 
-        axios.post(`http://localhost:8080/Merge/rest/candidato`, objeto)
+
+        apiService.post(`/candidato`, objeto)
             .then(res => {
-             
+
 
                 if (res.request.status == 201) {
                     { }
@@ -481,7 +483,7 @@ const Registrar = () => {
                                     handleChange,
                                     handleBlur,
                                     handleSubmit,
-                                    
+
                                     isSubmitting,
                                 }) => (
                                     <div className='fade-in-image fade-out-image '>
@@ -500,8 +502,11 @@ const Registrar = () => {
                                                                     </div>
                                                                     <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor={`idiomas.${index}.nome`} >Nome do idioma *</label>
-                                                                        <Field id={`idiomas.${index}.nome`} className="inputRegistrar" type="text" name={`idiomas.${index}.nome`} placeholder="Nome do idioma" />
-                                                                        <ErrorMessage className='errosInputs' component="div" name={`idiomas.${index}.nome`} />
+                                                                        <Field id={`idiomas.${index}.nome`} className="inputRegistrar" as="select" name={`idiomas.${index}.nome`}>
+                                                                            <option value="" disabled defaultValue>Selecione</option>
+                                                                            {idiomasForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                        </Field>
                                                                     </div>
 
                                                                     <div className="displayButton">
@@ -545,7 +550,12 @@ const Registrar = () => {
                                                                     </div>
                                                                     <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor={`formacoes.${index}.nome`}>Nome da formação *</label>
-                                                                        <Field id={`formacoes.${index}.nome`} className="inputRegistrar" type="text" name={`formacoes.${index}.nome`} placeholder="Nome da formação" />
+                                                                        <Field id={`formacoes.${index}.nome`} className="inputRegistrar" as="select" name={`formacoes.${index}.nome`}>
+                                                                            <option value="" disabled defaultValue>Selecione</option>
+                                                                            {formacoesForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                        </Field>
+                                                                        
                                                                         <ErrorMessage className='errosInputs' component="div" name={`formacoes.${index}.nome`} />
                                                                     </div>
                                                                     {/* <div className="col">
@@ -630,7 +640,11 @@ const Registrar = () => {
                                                                     </div>
                                                                     <div className='formsInputs '>
                                                                         <label className='labelRegistrar' htmlFor={`cursos.${index}.nome`} >Nome do curso *</label>
-                                                                        <Field id={`cursos.${index}.nome`} className="inputRegistrar" type="text" name={`cursos.${index}.nome`} placeholder="Nome do curso" />
+                                                                        <Field id={`cursos.${index}.nome`} className="inputRegistrar" as="select" name={`cursos.${index}.nome`}>
+                                                                            <option value="" disabled defaultValue>Selecione</option>
+                                                                            {cursosForm.map((r) => <option value={r.label}>{r.label}</option>)}
+
+                                                                        </Field>
                                                                         <ErrorMessage className='errosInputs' component="div" name={`cursos.${index}.nome`} />
                                                                     </div>
 

@@ -1,10 +1,11 @@
-import axios from 'axios';
+
+import apiService from '../Services/api/apiService';
 
 
 export const verificarCandidatura = async () => {
 
-            axios
-                .get(`http://localhost:8080/Merge/rest/candidatura/vaga=${codVaga}&candidato=${codCandidato}`)
+            apiService
+                .get(`/candidatura/vaga=${codVaga}&candidato=${codCandidato}`)
                 .then(response => {
                     return response.status
                 })

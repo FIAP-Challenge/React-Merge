@@ -84,6 +84,11 @@ svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root {
 }
 
 
+.align-bottons {
+    display: flex;
+}
+
+
 .buttonBottom{
  
 }
@@ -263,9 +268,67 @@ hr.style-two-modal {
     font-size: 20px;
 }
 
+
+.edit-vaga {
+    display: flex;
+    justify-content: space-between;
+}
 .containerHeaderModal {
     display: flex;
     justify-content: space-between;
+}
+
+
+.div-no-candidaturas {
+    background: linear-gradient(178deg, #363636, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    border-radius: 14px;
+}
+
+
+.button-visualizar-vaga {
+    width: 100%;
+    background: #0581f3ff !important;
+    color: white !important;
+    margin-top: 22px !important;
+    margin-bottom: 5px;
+}
+
+
+.button-edit-vaga {
+    width: 100%;
+    margin-right: 25px;
+    background: rgba(5, 128, 243, 0.808) !important;
+    color: white !important;
+    margin-top: 22px !important;
+    margin-bottom: 5px;
+}
+
+
+.button-edit-vaga:hover {
+    background: rgba(28, 93, 153, 0.808) !important;
+
+}
+
+.button-delete-vaga {
+    width: 100%;
+    margin-left: 25px;
+    background: rgb(243, 53, 5) !important;
+    color: white !important;
+    margin-top: 22px !important;
+    margin-bottom: 5px;
+}
+.buttons-div {
+    margin: 8px 19px;
+    width: 100%;
+}
+
+.button-delete-vaga:hover {
+
+    background: rgb(160, 55, 28) !important;
 }
 
 .fade-in-image {
@@ -276,13 +339,47 @@ hr.style-two-modal {
     -ms-animation: fadeIn 500ms;
   }
 
+  .div-close {
+    position: absolute;
+    right: 21px;
+    font-size: 22px;
+    cursor: pointer;
+    top: 17px;
+}
+
   .inscricoes-date {
     margin-top: 27px;
     display: flex;
     justify-content: flex-end;
     color: #838383;
 }
-  
+
+.div-close:hover {
+    transition: all .1s ease-in-out;
+    transform: scale(1.2);
+    color: #565656;
+}
+.modal-box{
+    font-family: "Manjari", sans-serif !important;
+}
+
+.titulo-modal-candidaturas {
+    font-family: "Manjari", sans-serif;
+
+    color: #0581f3ff;
+}
+
+.span-requisitos{
+    font-family: "Manjari", sans-serif;
+
+}
+.sub-modal-title {
+    font-family: "Manjari", sans-serif;
+    color: rgb(50 135 212 / 93%);
+}
+
+
+
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }

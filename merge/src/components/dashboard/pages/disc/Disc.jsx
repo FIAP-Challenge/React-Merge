@@ -10,12 +10,12 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { useState, useContext } from "react";
 import { AuthContext } from './../../../../AuthContext'
-import axios from 'axios';
 import { checkDisc } from "../../../../function/functionDisc";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
+import apiService from "../../../../Services/api/apiService";
 
    
 
@@ -63,9 +63,9 @@ const Disc = () => {
             "condescendente": objeto[3]
         }
         try {
-            let res = await axios({
+            let res = await apiService({
                 method: 'put',
-                url: `http://localhost:8080/Merge/rest/disc/${candidato.codigo}`,
+                url: `/disc/${candidato.codigo}`,
                 data: request
             });
             let data = res.data;
