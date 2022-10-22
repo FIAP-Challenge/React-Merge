@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-masonry-component": "^6.3.0",
+    "react-masonry-infinite": "^1.2.2"
+  }
+}

@@ -58,7 +58,7 @@ const Vagas = () => {
 
 
     return (
-        <div className="containerPage">
+        <div className="cotent-space align-vagas-candidaturas">
 
             {vagas.map((v) => {
                 return (

@@ -8,8 +8,10 @@ import CandidaturasModal from "./candidaturasModal/CandidaturasModal"
 import apiService from './../../../../Services/api/apiService'
 
 const masonryOptions = {
-    transitionDuration: 3
+    transitionDuration: 0
 };
+
+const imagesLoadedOptions = { background: '.my-bg-image-el'}
 
 const Candidaturas = () => {
     const { empresa } = useContext(AuthContext)
@@ -67,7 +69,7 @@ const Candidaturas = () => {
 
 
     return (
-        <div className="containerPage">
+        <div className="cotent-space">
             <div className="painel-candidaturas">
 
                 <div className="count-infos">
@@ -84,47 +86,40 @@ const Candidaturas = () => {
                 </div>
 
             </div>
-
-            <div className="space-content">
-
-            </div>
-
-            {vagas.map((v) => {
-                return (
-                    <div key={v.codigo} className="painel-vagas-pubs">
-                        <div className="edit-vaga">
-                            <div className="status-vaga">
-                                <span>Publicada</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="header-vaga">
-                                <h4>{v.nome.toUpperCase()} - {v.cargo.toUpperCase()}</h4>
-                            </div>
-                            <div className="body-vaga">
-                                <span className="vaga-describre">Descrição:</span>
-                                <span>{v.descricaoVaga}</span>
-                            </div>
-                            <div className="footer-vaga">
-                                <div>
-                                    <span className="span-days">Prazo: {countDays(v.dataFim)}</span>
-                                </div>
-                                <div className="div-codigo">
-                                    <span className="span-codigo">vaga: 000{v.codigo}</span>
+            <dir className="align-vagas-candidaturas">
+                {vagas.map((v) => {
+                    return (
+                        <div key={v.codigo} className="painel-vagas-pubs">
+                            <div className="edit-vaga">
+                                <div className="status-vaga">
+                                    <span>Publicada</span>
                                 </div>
                             </div>
+                            <div>
+                                <div className="header-vaga">
+                                    <h4>{v.nome.toUpperCase()} - {v.cargo.toUpperCase()}</h4>
+                                </div>
+                                <div className="body-vaga">
+                                    <span className="vaga-describre">Descrição:</span>
+                                    <span>{v.descricaoVaga}</span>
+                                </div>
+                                <div className="footer-vaga div-codigo">
+                                    <div>
+                                        <span className="span-days">Prazo: {countDays(v.dataFim)}</span>
+                                    </div>
+                                    <div >
+                                        <span className="span-codigo">vaga: 000{v.codigo}</span>
+                                    </div>
+                                </div>
 
-                            <div className="separator-vagas-modal">
-
-                                <CandidaturasModal vaga={v} />
+                                <div className="separator-vagas-modal">
+                                    <CandidaturasModal vaga={v} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )
-            })}
-
-
-
+                    )
+                })}
+            </dir>
 
 
         </div >
