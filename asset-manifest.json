@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-Merge/static/css/main.311faa84.css",
-    "main.js": "/React-Merge/static/js/main.a9c6adc2.js",
+    "main.css": "/React-Merge/static/css/main.cfb5c4c7.css",
+    "main.js": "/React-Merge/static/js/main.d5ad863d.js",
     "static/media/printExemploErrado.png": "/React-Merge/static/media/printExemploErrado.eb2caf8a030261b453a1.png",
     "static/media/printExemploCerto.png": "/React-Merge/static/media/printExemploCerto.b1e7fb4788e1ac769036.png",
     "static/media/Good team-pana 1.svg": "/React-Merge/static/media/Good team-pana 1.89ad8705dddc77a19b09161b4d819b69.svg",
@@ -15,11 +15,11 @@
     "static/media/icon merge.svg": "/React-Merge/static/media/icon merge.9e1101576f528308cc66ca0cd09a5cdb.svg",
     "static/media/Merge.svg": "/React-Merge/static/media/Merge.da98bc93e104d1ed755cb0b5f70dd8d6.svg",
     "index.html": "/React-Merge/index.html",
-    "main.311faa84.css.map": "/React-Merge/static/css/main.311faa84.css.map",
-    "main.a9c6adc2.js.map": "/React-Merge/static/js/main.a9c6adc2.js.map"
+    "main.cfb5c4c7.css.map": "/React-Merge/static/css/main.cfb5c4c7.css.map",
+    "main.d5ad863d.js.map": "/React-Merge/static/js/main.d5ad863d.js.map"
   },
   "entrypoints": [
-    "static/css/main.311faa84.css",
-    "static/js/main.a9c6adc2.js"
+    "static/css/main.cfb5c4c7.css",
+    "static/js/main.d5ad863d.js"
   ]
 }
